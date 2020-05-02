@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>background.jpg</file>
+        <file>icon/TextBook.ico</file>
+        <file>icon/FileEplorer.ico</file>
+    </qresource>
+</RCC>
