@@ -4,4 +4,12 @@
         <file>icon/TextBook.ico</file>
         <file>icon/FileEplorer.ico</file>
     </qresource>
+    <qresource prefix="/">
+        <file>tool/undo.ico</file>
+        <file>tool/save.ico</file>
+        <file>tool/redo.ico</file>
+        <file>tool/print.ico</file>
+        <file>tool/open.ico</file>
+        <file>tool/new.ico</file>
+    </qresource>
 </RCC>

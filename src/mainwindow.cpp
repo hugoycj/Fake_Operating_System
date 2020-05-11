@@ -39,8 +39,11 @@ MainWindow::~MainWindow()
 void MainWindow::clickTextbook()
 {
     std::cout << "Clicked Textbook" << std::endl;
+    Qt::WindowFlags m_flags = windowFlags();
     TextEditor *t = new TextEditor(this);
+    t->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
     t->show();
+    long * s;
 }
 
 void MainWindow::clickFile()

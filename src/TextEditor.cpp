@@ -11,9 +11,9 @@ TextEditor::TextEditor(QWidget *parent)
 bool TextEditor::construct()
 {
     bool ret = true;
-    ret = ret && initMenuBar();
+//    ret = ret && initMenuBar();
     ret = ret && initToolBar();
-    ret = ret && initStatusBar();
+//    ret = ret && initStatusBar();
     ret = ret && initinitMainEditor();
     return ret;
 }
@@ -54,6 +54,7 @@ bool TextEditor::initToolBar()//工具栏
     tb->setMovable(false);
     tb->setFloatable(false);
     tb->setIconSize(QSize(16,16));
+
 
     ret = ret && initFileToolItem(tb);
 
@@ -406,44 +407,53 @@ bool TextEditor::initFileToolItem(QToolBar* tb)
     bool ret = true;
     QAction* action = NULL;
 
-    ret = ret && makeAction(action, "New", ":/Res/pic/new.png");
+//    QPixmap newpix("new.png");
+//    QPixmap openpix("open.png");
+//    QPixmap quitpix("quit.png");
+//    tb->addAction(QIcon(newpix), "New File");
+//    tb->addSeparator();
+//    tb->addAction(QIcon(openpix), "Open File");
+//    tb->addSeparator();
+//    tb->addAction(QIcon(quitpix),"Quit Application");
+
+    ret = ret && makeAction(action, "New", ":/tool/new.ico");
     if(ret)
     {
         tb->addAction(action);
     }
 
-    ret = ret && makeAction(action, "Open", ":/Res/pic/open.png");
+    ret = ret && makeAction(action, "Open", ":/tool/open.ico");
     if(ret)
     {
         tb->addAction(action);
     }
 
-    ret = ret && makeAction(action, "Save", ":/Res/pic/save.png");
+    ret = ret && makeAction(action, "Save", ":/tool/save.ico");
     if(ret)
     {
         tb->addAction(action);
     }
 
-    ret = ret && makeAction(action, "Save As", ":/Res/pic/saveas.png");
+//    ret = ret && makeAction(action, "Save As", ":/Res/pic/saveas.png");
+//    if(ret)
+//    {
+//        tb->addAction(action);
+//    }
+//    ret = ret && makeAction(action, "Print", ":/tool/print.ico");
+//    if(ret)
+//    {
+//        tb->addAction(action);
+//    }
+    ret = ret && makeAction(action, "Undo", ":/tool/undo.ico");
     if(ret)
     {
         tb->addAction(action);
     }
-    ret = ret && makeAction(action, "Print", ":/Res/pic/print.png");
-    if(ret)
-    {
-        tb->addAction(action);
-    }
-    ret = ret && makeAction(action, "Undo", ":/Res/pic/undo.png");
-    if(ret)
-    {
-        tb->addAction(action);
-    }
-    ret = ret && makeAction(action, "Redo", ":/Res/pic/redo.png");
-    if(ret)
-    {
-        tb->addAction(action);
-    }
+//    ret = ret && makeAction(action, "Redo", ":/tool/redo.ico");
+//    if(ret)
+//    {
+//        tb->addAction(action);
+//    }
 
     return ret;
 
@@ -483,3 +493,4 @@ TextEditor::~TextEditor()
 {
 
 }
+
