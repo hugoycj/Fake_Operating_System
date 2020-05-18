@@ -10,13 +10,16 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <vector>
+#include <iostream>
 
 typedef ProcessControlBlock PCB;
 
 
 ProcessesList::ProcessesList()
 {
-    ProcessControlBlock Process_List[100];
+    size = 0;
+    clean();
 }
 /**
  * @brief input is to input the informations of a process
@@ -27,10 +30,8 @@ void ProcessesList::input()
 {
     int i,num;
     char ch;
-    //clrscr(); /*Windows清屏*/
-    // system("clear");/*linux清屏函数*/
-    printf("\n请输入进程个数:");
-    scanf("%d",&num);
+    std::cout << "\n请输入进程个数:";
+    scanf("%d", &num);
     for(i=0;i<num;i++)
     {
         PCB pr= PCB();
@@ -49,9 +50,11 @@ void ProcessesList::input()
         printf("\n");
         pr.process_state='W'; //Wait等待标志
 //        pr.process_link=NULL; //指向空指针
-        pr.process_start_time = -999; //-999表示未开始
-        pr.process_end_time = -999; //-999表示未开始
-        pr.process_priority = 999;//999代表最小，1代表最大
+        pr.process_end_time = 999; //999表示未结束
+        pr.process_priority = 0;//0代表最小，越大优先级越高
+        Process_List.push_back(pr);
+        size++;
+        calculate_Priority();
         sort(); //调用sort函数
     }
 };
@@ -64,16 +67,24 @@ void ProcessesList::input()
 void ProcessesList::sort()
 {   
     int i, j;
-    for (i  = 0; i  < 99; ++i)
-    for (j  = 0; j  < 99; ++j)
+    if (size == 1)
+        return;
+    else
     {
-        if (Process_List[j].process_priority < Process_List[j + 1].process_priority)
+        for (i = 0; i <= size; i++)
         {
-            float temp  = Process_List[j  + 1].process_priority;
-            Process_List[j  + 1].process_priority = Process_List[j].process_priority;
-            Process_List[j].process_priority = temp;
+            for (j = i+1; j <= size - 1; j++)
+            {
+                if (Process_List[i].process_priority > Process_List[j].process_priority)
+                {
+                    PCB temp = Process_List[j];
+                    Process_List[j] = Process_List[i];
+                    Process_List[j] = temp;
+                }
+            }
         }
-    }
+     }
+
 }
 
 /**
@@ -81,16 +92,31 @@ void ProcessesList::sort()
 *
 *  display has no return value, the parameter is a Pointer variable of process
 */
-void ProcessesList::display(PCB *pr)
+void ProcessesList::display()
 {
-    printf("\n|Process ID |Process Name |Process State |Arrive Time |Run Time |Start Time |End Time |\n");
-    printf("|%d\t", pr->process_id);
-    printf("|%s\t", pr->process_name);
-    printf("|%c\t", pr->process_state);
-    printf("|%d\t", pr->process_arrive_time);
-    printf("|%d\t", pr->process_run_time);
-    printf("|%d\t", pr->process_start_time);
-    printf("|%d\t", pr->process_end_time);
+    printf("\n|ID |Priority |Name |State |Arrive Time |Run Time |Start Time |End Time |\n");
+    if (isEmpty())
+        return;
+    else
+    {
+        for (int i=0; i < size; i++)
+        {
+            ProcessControlBlock pr = Process_List[i];
+            show_single_pcb(pr);
+         }
+    }
+}
+
+void ProcessesList::show_single_pcb(ProcessControlBlock &pr)
+{
+    printf("|%d\t", pr.process_id);
+    printf("|%f\t", pr.process_priority);
+    printf("|%s\t", pr.process_name);
+    printf("|%c\t", pr.process_state);
+    printf("|%d\t", pr.process_arrive_time);
+    printf("|%d\t", pr.process_run_time);
+//    printf("|%d\t", pr.process_start_time);
+    printf("|%d\t", pr.process_end_time);
     printf("\n");
 }
 
@@ -112,8 +138,7 @@ void ProcessesList::output()
 */
 void ProcessesList::clean()
 {
-//    memset(Process_List, 0, sizeof(Process_List));
-    Process_List = nullptr;
+    Process_List.clear();
 }
 
 /**
@@ -123,19 +148,16 @@ void ProcessesList::clean()
  */
 void ProcessesList::calculate_Priority()
 {
-    time_t present_time;
-    int a = 0;
-    present_time = time(NULL);
-    while (a < 100)
+    int present_time = 3;
+    for (int i = 0; i < size; i++)
     {
-        if (Process_List[a].process_id)
-        {
-            Process_List[a].process_priority = (present_time - Process_List[a].process_arrive_time) / Process_List[a].process_run_time + 1;
-        }
-        else
-        {
-            break;
-        }
-        a++;
+        PCB *pr;
+        pr = &Process_List[i];
+        pr->process_priority = (present_time - pr->process_arrive_time) / pr->process_run_time + 1;
     }
+}
+
+bool ProcessesList::isEmpty()
+{
+       return (size == 0);
 }

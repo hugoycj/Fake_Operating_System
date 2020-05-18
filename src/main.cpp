@@ -15,9 +15,9 @@ int main(int argc, char *argv[])
 
     /* Process Management Test Part*/
     ProcessesList pl;
-//    Process rl;
     std::cout << "Running" << std::endl;
     pl.input();
+    pl.display();
     /** TODO:
      *  while (!pl.isempty)
      *   Process *PCB = pl.output();
