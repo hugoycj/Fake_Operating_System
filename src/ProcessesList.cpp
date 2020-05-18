@@ -19,6 +19,12 @@ typedef ProcessControlBlock PCB;
 ProcessesList::ProcessesList()
 {
     size = 0;
+    current_id = 1;
+    char tmp[64];
+    time(&start_time);
+    printf("Global start time is:");
+    strftime(tmp, sizeof(tmp), "%Y-%m-%d %H:%M:%S", localtime(&start_time));
+    std::cout << tmp << std::endl;
     clean();
 }
 /**
@@ -35,11 +41,16 @@ void ProcessesList::input()
     for(i=0;i<num;i++)
     {
         PCB pr= PCB();
-        printf("输入进程名:");
-        scanf("%s",pr.process_name);
-        printf("输入进程到达时间:");
-        scanf("%d",&pr.process_arrive_time);
-        printf("输入进程需要运行时间:");
+        char tmp[64];
+//        printf("输入进程名:");
+//        scanf("%s",pr.process_name);
+
+        printf("进程到达时间为");
+        time(&pr.process_arrive_time);
+        strftime(tmp, sizeof(tmp), "%Y-%m-%d %H:%M:%S", localtime(&pr.process_arrive_time));
+        std::cout << tmp << std::endl;
+
+        printf("进程运行时间为");
         scanf("%d",&pr.process_run_time);
         while( (pr.process_arrive_time) < 0 )
         {
@@ -48,12 +59,15 @@ void ProcessesList::input()
             scanf("%d",&pr.process_arrive_time);
         }
         printf("\n");
+
         pr.process_state='W'; //Wait等待标志
+        pr.process_id = current_id;
 //        pr.process_link=NULL; //指向空指针
-        pr.process_end_time = 999; //999表示未结束
+        pr.process_end_time = -1; //-表示未结束
         pr.process_priority = 0;//0代表最小，越大优先级越高
         Process_List.push_back(pr);
         size++;
+        current_id++;
         calculate_Priority();
         sort(); //调用sort函数
     }
@@ -94,7 +108,7 @@ void ProcessesList::sort()
 */
 void ProcessesList::display()
 {
-    printf("\n|ID |Priority |Name |State |Arrive Time |Run Time |Start Time |End Time |\n");
+    printf("\n|ID |Priority  |Name    |State  |Arrive Time |Run Time |Start Time |End Time |\n");
     if (isEmpty())
         return;
     else
@@ -109,11 +123,11 @@ void ProcessesList::display()
 
 void ProcessesList::show_single_pcb(ProcessControlBlock &pr)
 {
-    printf("|%d\t", pr.process_id);
-    printf("|%f\t", pr.process_priority);
+    printf("|%d  ", pr.process_id);
+    printf("|%f  ", pr.process_priority);
     printf("|%s\t", pr.process_name);
     printf("|%c\t", pr.process_state);
-    printf("|%d\t", pr.process_arrive_time);
+    printf("|%d\t", (int) difftime(present_time, pr.process_arrive_time));
     printf("|%d\t", pr.process_run_time);
 //    printf("|%d\t", pr.process_start_time);
     printf("|%d\t", pr.process_end_time);
@@ -148,12 +162,12 @@ void ProcessesList::clean()
  */
 void ProcessesList::calculate_Priority()
 {
-    int present_time = 3;
+    time(&present_time);
     for (int i = 0; i < size; i++)
     {
         PCB *pr;
         pr = &Process_List[i];
-        pr->process_priority = (present_time - pr->process_arrive_time) / pr->process_run_time + 1;
+        pr->process_priority = difftime(present_time, pr->process_arrive_time) / pr->process_run_time + 1;
     }
 }
 

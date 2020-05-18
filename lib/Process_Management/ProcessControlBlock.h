@@ -16,6 +16,7 @@
  */
 
 #include <string> 
+#include <time.h>
 //#include "Process.h"
 
 #ifndef PROCESSCONTROLBLOCK_H
@@ -28,21 +29,19 @@ public:
     ProcessControlBlock()
     {
         process_id = -1;
-        process_name[10];
+        process_name[10] = 'null';
         process_state = '\0';
 //        process_link=NULL; //指向空指针
-//        process_start_time = -999; //-999表示未开始
-        process_end_time = -999; //-999表示未开始
+        process_end_time = -1; //-1表示未开始
         process_priority = 999;//999代表最小，1代表最大
     }
 
 	int process_id; ///< Process unique ID
 	char process_name[10]; ///< The same as the program name, which might be the same as the other process
     char process_state; ///< "W", "R", "F"
-    int process_arrive_time; ///< the process preparing finished time
-	int process_run_time; ///< how much time the process cost
-//    int process_start_time; ///< time when process start to run
-	int process_end_time; ///< time when process end to run
+    time_t process_arrive_time; ///< the process preparing finished time
+    int process_run_time; ///< how much time the process cost
+    time_t process_end_time; ///< time when process end to run
     float process_priority; ///< priority
 //	Process *process_link; ///< link to process
 	

@@ -33,6 +33,9 @@ public:
 private:
     std::vector<ProcessControlBlock> Process_List;
     int size;
+    int current_id;
+    time_t start_time;
+    time_t present_time;
 };
 
 #endif
