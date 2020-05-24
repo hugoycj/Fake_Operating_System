@@ -1,8 +1,12 @@
 #include "lib/mainwindow.h"
 #include "lib/TextEditor.h"
+#include "lib/MappingDisplayer.h"
 #include "ui_mainwindow.h"
+#include <QTableWidget>
+#include <QHeaderView>
 #include <QIcon>   //注意包含头文件
 #include <iostream>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -29,6 +33,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->FileButton, &QPushButton::clicked,this, &MainWindow::clickFile);
     ui->FileLabel->setStyleSheet("color:white;");
 
+    /// Set memory_displayer icon
+    QIcon MemoryIcon; //新建QIcon对象
+    MemoryIcon.addFile(tr(":/image/icon/MemoryDisplayer.ico")); //让QIcon对象指向想要的图标
+    ui->DisplayerButton->setIcon(MemoryIcon); //给按钮添加图标
+    ui->DisplayerButton->setIconSize(QSize(50,50));//重置图标大小
+    connect(ui->DisplayerButton, &QPushButton::clicked,this, &MainWindow::clickMemory);
+    ui->DisplayerLabel->setStyleSheet("color:white;");
+
 }
 
 MainWindow::~MainWindow()
@@ -43,12 +55,21 @@ void MainWindow::clickTextbook()
     TextEditor *t = new TextEditor(this);
     t->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
     t->show();
-    long * s;
+//    long * s;
 }
 
 void MainWindow::clickFile()
 {
     std::cout << "Clicked File Explorer" << std::endl;
 //    a->show();
+}
+
+void MainWindow::clickMemory()
+{
+    std::cout << "Clicked Memory Displayer" << std::endl;
+//    Qt::WindowFlags m_flags = windowFlags();
+    MappingDisplayer *t = new MappingDisplayer();
+//    t->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
+//    t->show();
 }
 

@@ -36,16 +36,17 @@ size_t FSB_allocator::memory_alignment (size_t required_mem_size) {
         min_index = -1;
     };
 
-    cout << "min idx: " << min_index << endl;
     return min_index;
 };
 
 
 // expand block_map if over-sized meomory size is required
 void FSB_allocator::expand_mem(size_t mem_size) {
+    cout<<"Start memory expansion"<<endl;
+
     // calculate the proper size should be added
     size_t adjusted_size = calculate_mem_size(mem_size);
-    cout<<"adjusted_size: "<<adjusted_size<<endl;
+    cout<<"new size: "<<adjusted_size<<endl;
 
     // update blocksize vector
     BLOCK_SIZES.push_back(adjusted_size);
@@ -55,7 +56,6 @@ void FSB_allocator::expand_mem(size_t mem_size) {
     int count_idx = 0;
     for (size_t block_size : BLOCK_SIZES) {
         if (block_size == adjusted_size) {
-            cout << "check idx: " << count_idx << endl;
             block_map[count_idx] = head;
         };
         count_idx++;
@@ -69,6 +69,8 @@ void FSB_allocator::expand_mem(size_t mem_size) {
         current->link = next;
         current = next;
     };
+    display();
+    cout << "" << endl;
 };
 
 
@@ -86,6 +88,7 @@ FSB_allocator::FSB_allocator() {
         for (int j = 0; j < 16; j++) {
             block * next = new block;
             next->data_ptr = nullptr; // initialize data
+            next->link = nullptr; // point the last block to null
             current->link = next;
             current = next;
         };
@@ -96,12 +99,14 @@ FSB_allocator::FSB_allocator() {
 // Destructor
 FSB_allocator::~FSB_allocator(){
     for (unsigned int i = 0; i < BLOCK_SIZES.size(); i++) {
-
         block * head = block_map[i];
+
+        int block_count = 0;
         // delete the blocks of each head one by one
         while (head->link != nullptr) {
             block * temp = head; // old first block
             head = head->link; // re-link the head to the next one
+            block_count++;
             delete(temp); // delete the old first head
         };
 
@@ -117,6 +122,8 @@ FSB_allocator::~FSB_allocator(){
 // Return ptr of first byte of the allocated memory
 // Take out one block from the corresponding free-list
 void * FSB_allocator::alloc(size_t mem_size) {
+    cout << "Start memory allocation" << endl;
+
     // calculate the proper size
     size_t best_size = calculate_mem_size(mem_size);
 
@@ -126,14 +133,13 @@ void * FSB_allocator::alloc(size_t mem_size) {
     // if the proper size is not in the size vector yet,
     // update the vector with this specific size
     if (it == BLOCK_SIZES.end()) {
-        cout<<"EXPAND"<<endl;
         expand_mem(mem_size);
     };
 
     // get the head pointer of the proper size in block_map
     size_t block_header_idx = memory_alignment(mem_size);
     block * temp = block_map[block_header_idx];
-    
+
     // if the free-list of this specific size is empty,
     // add a new one to free list
     if (temp == NULL) {
@@ -147,15 +153,14 @@ void * FSB_allocator::alloc(size_t mem_size) {
         temp->link = nullptr; // delete the link between previous head and the next block
     };
 
-    // call data_test() to simulate the process of storage
-    vector<int> data = {1,2};
-    cout << "check data size: " << sizeof(data) << endl;
-    temp->data_test(BLOCK_SIZES[block_header_idx],data);
-
     // use this function to malloc a memory and assign to pointer
-//    temp->alloc_data_mem(BLOCK_SIZES[block_header_idx]);
+    temp->alloc_data_mem(BLOCK_SIZES[block_header_idx]);
 
-    cout << "end of alloc" << endl;
+    cout << "required memory size: " << mem_size << endl;
+    cout << "given block size: " << BLOCK_SIZES[block_header_idx] << endl;
+    display();
+    cout << "" << endl;
+
     return temp->data_ptr;
 };
 
@@ -176,7 +181,21 @@ int FSB_allocator::loop_test(int header_idx) {
         i++;
         start = start->link;
     };
+//    cout << BLOCK_SIZES[header_idx] << "-bytes list has : " << i << " blocks" << endl;
     return i;
+};
+
+
+void FSB_allocator::display() {
+    for (unsigned int idx = 0; idx < BLOCK_SIZES.size(); idx++) {
+        int i = 0;
+        block * start = block_map[idx];
+        while (start->link != nullptr) {
+            i++;
+            start = start->link;
+        };
+        cout << BLOCK_SIZES[idx] << "-bytes list has : " << i << " blocks" << endl;
+    }
 };
 
 

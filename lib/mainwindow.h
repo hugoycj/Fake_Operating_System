@@ -21,5 +21,6 @@ private:
     Ui::MainWindow *ui;
     void clickTextbook();
     void clickFile();
+    void clickMemory();
 };
 #endif // MAINWINDOW_H

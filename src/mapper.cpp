@@ -1,4 +1,7 @@
-// impl of paging mapper API
+/*
+* Reference:
+* Perez, R., Brunette, A. & Zhang, A., (2019) Virtual Memory Manager [Source code]. https://github.com/abrunette/Virtual_Memory_Manager
+*/
 #include <string>
 #include <iostream>
 #include <map>
@@ -10,6 +13,8 @@
 #include <ctime>
 
 using namespace std;
+
+// impl of paging mapper API
 
 /* Virtual Address: 32-bit
  *
@@ -72,7 +77,7 @@ using namespace std;
  * Since there PTSize is 64, 64 TLB are required.
  */
 
-void zero_extend(string &target, unsigned int len) {
+void VM::zero_extend(string &target, unsigned int len) {
     while (target.length() < len) {
         target = "0" + target;
     };
@@ -94,12 +99,12 @@ VM::~VM() {
 };
 
 
-void VM::mapper() {
+void VM::mapper_test() {
 
     ifstream infile;
 //    string filename = "address_2.txt";
 //    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/address.txt";
-    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/address_2.txt";
+    string filename = "/Users/zxy/Desktop/Fake_Operating_System/src/address_2.txt";
 //    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/duplicated_address.txt";
 
     infile.open(filename.c_str());
@@ -170,25 +175,32 @@ int VM::tlbSearch(int index, int target) {
             if (id == index) {
                 vector<int> pt = it->second;
                 frame = pt[target];
-            };
-        };
+            }
+        }
         updateTLB(index, target, frame);
-    };
+        cout<<index<<"-th TLB"<<endl;
+        cout<<"tlb idx: "<<tlbIndexSet[index]<<endl;
+//        cout << "check page in mapper: " << TLBTable[index][tlbIndex][0] << endl;
+//        cout << "check frame in mapper: " << TLBTable[index][tlbIndex][1] << endl;
+    }
 
     cout<<"tlbSearch OK"<<endl;
     return frame;
-};
+}
 
 
 void VM::updateTLB(int index, int page, int frame) {
-    if (tlbIndex == TLBSize) {
-        tlbIndex = 0;
+    if (tlbIndexSet[index] == TLBSize-1) {
+        tlbIndexSet[index] = 0;
     };
 
-    TLBTable[index][tlbIndex][0] = page;
-    TLBTable[index][tlbIndex][1] = frame;
-    tlbIndex++;
+    TLBTable[index][(tlbIndexSet[index])][0] = page;
+    TLBTable[index][(tlbIndexSet[index])][1] = frame;
+    cout<<"up"<<endl;
+//    cout << "check page in mapper: " << TLBTable[index][tlbIndex][0] << endl;
+//    cout << "check frame in mapper: " << TLBTable[index][tlbIndex][1] << endl;
 
+    (tlbIndexSet[index])++;
 };
 
 
@@ -212,6 +224,51 @@ void VM::random_init(int id) {
     cout<<"init ok"<<endl;
 };
 
+
+
+// get value in lv1 pt with idx
+int VM::lv1_pt_get(int idx) {
+    return LV1_PT[idx];
+}
+
+// get value of fpage
+int VM::fpage_get() {
+    return fpage;
+}
+
+// set value fo fpage
+void VM::fpage_set(int value) {
+    fpage = value;
+}
+
+// get lv2 pt
+vector<int> VM::lv2_pt_get (int index) {
+    vector<int> temp;
+    map< int, vector<int> >::iterator it;
+    for (it = LV2_PT_SET.begin(); it!= LV2_PT_SET.end(); it++) {
+        int id = it->first;
+        if (id == index) {
+            temp = it->second;
+            break;
+        };
+    };
+    return temp;
+}
+
+// get TLB idx-th table
+vector<int> VM::tlb_get(int index, int row_idx) {
+    vector<int> buf;
+
+//    cout << "tlb get, tlb idx " << index << endl;
+//    cout << "tlb get, row idx " << row_idx << endl;
+    cout << "check page in mapper: " << TLBTable[index][row_idx][0] << endl;
+    cout << "check frame in mapper: " << TLBTable[index][row_idx][1] << endl;
+
+    buf.push_back(TLBTable[index][row_idx][0]);
+    buf.push_back(TLBTable[index][row_idx][1]);
+
+    return buf;
+}
 
 int VM::binToInt(string str) {
     int n = 0;
