@@ -6,17 +6,18 @@
 #include "lib/mapper.h"
 #include "lib/allocator.h"
 #include "lib/calculator.h"
+#include "test.cpp"
 
 void calculation_memory_test();
 
 int main(int argc, char *argv[]) {
     /* Desktop GUI Part*/
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.setWindowTitle("Fake Operating System");
+//    QApplication a(argc, argv);
+//    MainWindow w;
+//    w.setWindowTitle("Fake Operating System");
 
-    w.show();
-    return a.exec();
+//    w.show();
+//    return a.exec();
 
     /* Process Management Test Part*/
 //    ProcessesList pl;
@@ -28,6 +29,8 @@ int main(int argc, char *argv[]) {
     /* memory management Part */
 //    calculation_memory_test();
 
+    /* test module */
+    test(2);
     return 0;
 };
 

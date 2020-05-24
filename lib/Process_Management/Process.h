@@ -1,25 +1,32 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 #include <string>
-
-//TODO(hugoycj): change into address
+#include <lib/calculator.h>
+template <class T1, class T2>
 class Process
 {
 public:
-	Process();
+    Process(T1 in_A, T2 in_B, string type)
+    {
+        A = in_A;
+        B = in_B;
+        calculate_type = type;
+    };
 
-	/**
-	 * A function giving the ID of the process
-	 * @return ID of the process
-	 */
-	int getID();
+    void run_process()
+    {
+        if (calculate_type == "mtx_mult")
+           mtx_mult(A, B);
+        else if (calculate_type == "mtx_inv")
+           mtx_inv(A);
+        else
+           calculate(A, B, calculate_type);
+    }
 
 private:
-	int id; 
-	std::string text; ///< Program code
-	std::string temp_data; ///< preload data from the file system or operating system
-	std::string temp_heap; ///< heap to store some dynamic data during the execution of the program
-	std::string temp_stack; ///< stack to store registers and some global variables
+    T1 A;
+    T2 B;
+    string calculate_type;
 };
 
 
