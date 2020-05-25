@@ -142,6 +142,7 @@ void ProcessesList::show_single_pcb(ProcessControlBlock &pr)
 PCB ProcessesList::output()
 {
     PCB temp =  Process_List[0];
+    temp.process_link->run_process();
     Process_List.erase(Process_List.begin());
     size--;
     return temp;

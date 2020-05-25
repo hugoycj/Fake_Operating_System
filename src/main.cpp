@@ -37,20 +37,15 @@ int main(int argc, char *argv[]) {
     /* Process Management Test Part*/
     ProcessesList pl;
     std::cout << "Running" << std::endl;
-//    pl.input();
-//    pl.display();
-
-
-    /* memory management Part */
-//    calculation_memory_test();
-
-    /* test module */
-//    test(2, &pl);
-//    test(3, &pl);
-//    test(2, &pl);
+    test(2, &pl);
+    test(2, &pl);
+    test(2, &pl);
+    test(2, &pl);
     thread major(run, &pl);
     thread t1(testAPP, &pl);
+    thread dpl(display_pl, &pl);
     t1.join();
+    dpl.join();
     major.join();
     return 0;
 };
@@ -76,7 +71,7 @@ void run(ProcessesList *pl)
 
     while (1)
     {
-        int now = clock()/CLOCKS_PER_SEC;
+        int now = clock()/(CLOCKS_PER_SEC+1);
         if (now - lastTime > 0)
         {
             pl->display();
@@ -84,15 +79,24 @@ void run(ProcessesList *pl)
             {
                 pl->output();
                 cout << "runed a process" << endl;
-                sleep(2);
             }
             lastTime = now;
         }
     }
+}
+
+void display_pl(ProcessesList *pl)
+{
+    int i = 0;
+    int lastTime = 0;
 
     while (1)
     {
-
-        sleep(2);
+        int now = clock()/CLOCKS_PER_SEC;
+        if (now - lastTime > 0)
+        {
+            pl->display();
+            lastTime = now;
+        }
     }
-}
+};

@@ -2,38 +2,27 @@
 #define PROCESS_H
 #include <string>
 #include <lib/calculator.h>
-
-template <class T1, class T2, class T3>
+#include <vector>
 class Process
 {
 public:
-    Process(T1 in_A, T2 in_B, string type)
+    Process(vector<double> in_A, vector<double> in_B, string type)
     {
         A = in_A;
         B = in_B;
         calculate_type = type;
     };
 
-    T3 run_process(T1 in_A, T2 in_B, string type)
+    void run_process()
     {
-        T3 result;
-        caluclate(A, B, type);
-//        if (calculate_type == "mtx_mult")
-////TODO: fix bug
-////           result = mtx_mult(A, B);
-//            std::cout << "pass" << endl;
-//        else if (calculate_type == "mtx_inv")
-////           result = mtx_inv(2, A);
-//            std::cout << "pass" << endl;
-//        else
-////           result = calculate(A, B, calculate_type);
-//            std::cout << "pass" << endl;
-        return result;
+        double *result;
+        result = calculate(A, B, calculate_type);
+        cout << result << endl;
     }
 
 private:
-    T1 A;
-    T2 B;
+    vector<double> A;
+    vector<double> B;
     string calculate_type;
 };
 

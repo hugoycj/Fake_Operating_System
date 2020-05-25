@@ -1,4 +1,5 @@
 #include <vector>
+#include <random>
 #include <lib/calculator.h>
 #include <assert.h>
 #include <Process.h>
@@ -46,24 +47,24 @@ void test(int mode, ProcessesList *pl)
         tempB = {1, 2, 3};
         size = sizeof(tempA);
 
-        static Process<vector<double>, vector<double>, double>  p1(tempA, tempB, type );
-        PCB pcb1(cur_id, type, size);
+        static Process p1(tempA, tempB, type);
+        PCB pcb1(cur_id, type, size, &p1);
         pl->push(pcb1);
     }
     /* Mode 3: Matrix invert */
-    else if (mode == 3)
-    {
-        type = "mtx_inv";
-        vector<vector<double>> A, result;
-        A = { {5, -2, 2, 7},
-             {1, 0, 0, 3},
-             {-3, 1, 5, 0},
-             {3, -1, -9, 4}};
-        size = A.size()^2;
-        static Process<vector<vector<double>>, int, vector<vector<double>>>  P2(A, 0, "mtx_inv");
-        PCB pcb2(cur_id, type, size);
-        pl->push(pcb2);
-    }
+//    else if (mode == 3)
+//    {
+//        type = "mtx_inv";
+//        vector<vector<double>> A, result;
+//        A = { {5, -2, 2, 7},
+//             {1, 0, 0, 3},
+//             {-3, 1, 5, 0},
+//             {3, -1, -9, 4}};
+//        size = A.size()^2;
+//        static Process<vector<vector<double>>, int, vector<vector<double>>>  P2(A, 0, "mtx_inv");
+//        PCB pcb2(cur_id, type, size);
+//        pl->push(pcb2);
+//    }
 }
 
 
@@ -122,4 +123,9 @@ vector<double> get_one_col(vector<vector<double>> matrix, int col)
 
     assert(result.size() == r);
     return result;
+}
+
+vector<double> vector_generator(int lentgh)
+{
+
 }
