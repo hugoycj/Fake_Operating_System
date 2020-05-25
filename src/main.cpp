@@ -10,6 +10,14 @@
 #include "lib/calculator.h"
 #include "test.cpp"
 #include "Process.h"
+
+/**
+ * TODO:
+ * 1. 解决输入输出死锁问题
+ * 2. 解决进程保存问题
+ * 3. 测试进程运行
+ */
+
 using namespace std;
 void calculation_memory_test();
 void testAPP(ProcessesList *pl);
