@@ -1,11 +1,17 @@
 #include <vector>
 #include <lib/calculator.h>
 #include <assert.h>
+#include <Process.h>
 
 using namespace std;
 vector<vector<double>> matrix_input(int row, int col);
 vector<double> get_one_col(vector<vector<double>> matrix, int col);
 
+/*
+ * @brief Used to test memory allocator and process management
+ * @param mode
+ * One test function is one process, it include: creating process and PCB
+ */
 void test(int mode)
 {
     /* Mode 1: Simple Calculation */
@@ -20,21 +26,34 @@ void test(int mode)
         vector<double> tempA, tempB;
         int result_r, result_c, temp_result;
 
-        A = matrix_input(1, 3);
-        B = matrix_input(3, 1);
+//        A = matrix_input(1, 3);
+//        B = matrix_input(3, 1);
+//        result_r = A.size();
+//        result_c = B[0].size();
 
-        result_r = A.size();
-        result_c = B[0].size();
+//        cout << "Size of result is: " << result_c << "*" << result_r << endl;
 
-        cout << "Size of result is: " << result_c << "*" << result_r << endl;
+//        tempA = A[0];
+//        tempB = get_one_col(B, 1);
+        tempA = {1, 2, 1};
+        tempB = {1, 2, 3};
 
-        tempA = A[0];
-        tempB = get_one_col(B, 1);
-        temp_result = mtx_mult(tempA, tempB);
+        Process<vector<double>, vector<double>, double>  P1(tempA, tempB, "mtx_mult");
+        temp_result = P1.run_process();
 
         cout << "Result is: " << temp_result << endl;
     }
-
+    /* Mode 3: Matrix invert */
+    else if (mode == 3)
+    {
+        vector<vector<double>> A, result;
+        A = { {5, -2, 2, 7},
+             {1, 0, 0, 3},
+             {-3, 1, 5, 0},
+             {3, -1, -9, 4}};
+        Process<vector<vector<double>>, int, vector<vector<double>>>  P2(A, 0, "mtx_inv");
+        result = P2.run_process();
+    }
 }
 
 

@@ -2,7 +2,7 @@
 #define PROCESS_H
 #include <string>
 #include <lib/calculator.h>
-template <class T1, class T2>
+template <class T1, class T2, class T3>
 class Process
 {
 public:
@@ -13,14 +13,20 @@ public:
         calculate_type = type;
     };
 
-    void run_process()
+    T3 run_process()
     {
+        T3 result;
         if (calculate_type == "mtx_mult")
-           mtx_mult(A, B);
+//TODO: fix bug
+//           result = mtx_mult(A, B);
+            std::cout << "pass" << endl;
         else if (calculate_type == "mtx_inv")
-           mtx_inv(A);
+//           result = mtx_inv(2, A);
+            std::cout << "pass" << endl;
         else
-           calculate(A, B, calculate_type);
+//           result = calculate(A, B, calculate_type);
+            std::cout << "pass" << endl;
+        return result;
     }
 
 private:
@@ -28,6 +34,7 @@ private:
     T2 B;
     string calculate_type;
 };
+
 
 
 #endif // PROCESS_H

@@ -28,8 +28,6 @@ using namespace std;
 // add, sub, div, mult
 double * calculate(double data_1, double data_2, string type);
 
-
-
 /* Matrix Operation */
 
 // matrix multiplication, dot operation for one rwo and one col

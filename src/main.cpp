@@ -7,6 +7,7 @@
 #include "lib/allocator.h"
 #include "lib/calculator.h"
 #include "test.cpp"
+#include "Process.h"
 
 void calculation_memory_test();
 
