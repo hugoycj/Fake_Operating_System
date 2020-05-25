@@ -23,7 +23,7 @@ public:
 	void input(); /* 进程控制块插入函数*/	
     void sort();  /* 对进程进行优先级排列函数*/
     void display(); /*显示当前所有等待进程*/
-	void output(); /*找到优先级第一或最高响应比的等待进程，并将其状态设置为“R”*/
+    ProcessControlBlock output(); /*找到优先级第一或最高响应比的等待进程，并将其状态设置为“R”*/
 	void clean(); /*清空所有进程*/
     void calculate_Priority();
     bool isEmpty();

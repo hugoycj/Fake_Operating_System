@@ -2,14 +2,19 @@
 #include "ProcessesList.h"
 #include <QApplication>
 #include <iostream>
-
+#include <thread>
+#include <unistd.h>
+#include <ctime>
 #include "lib/mapper.h"
 #include "lib/allocator.h"
 #include "lib/calculator.h"
 #include "test.cpp"
 #include "Process.h"
-
+using namespace std;
 void calculation_memory_test();
+void testAPP(ProcessesList *pl);
+void run(ProcessesList *pl);
+void display_pl(ProcessesList *pl);
 
 int main(int argc, char *argv[]) {
 
@@ -22,7 +27,6 @@ int main(int argc, char *argv[]) {
 //    return a.exec();
 
     /* Process Management Test Part*/
-    int mode;
     ProcessesList pl;
     std::cout << "Running" << std::endl;
 //    pl.input();
@@ -33,13 +37,10 @@ int main(int argc, char *argv[]) {
 //    calculation_memory_test();
 
     /* test module */
-    while(1)
-    {
-        cout << "Please input test mode: ";
-        cin >> mode;
-        test(mode,&pl);
-        pl.display();
-    }
+    thread major(run, &pl);
+    thread t1(testAPP, &pl);
+    t1.join();
+    major.join();
     return 0;
 };
 
@@ -78,4 +79,60 @@ void calculation_memory_test() {
     mtx_inv(size,B);
 };
 
+void testAPP(ProcessesList *pl)
+{
+    int mode;
+    while(1)
+    {
+//        cout << "Please input test mode: ";
+        cin >> mode;
+        if (mode == 0)
+            return;
+        else
+            test(mode, pl);
+    }
+}
 
+void run(ProcessesList *pl)
+{
+    int i = 0;
+    int lastTime = 0;
+
+    while (1)
+    {
+        int now = clock()/CLOCKS_PER_SEC;
+        if (now - lastTime > 0)
+        {
+            if (!pl->isEmpty())
+            {
+                pl->output();
+                cout << "runed a process" << endl;
+                sleep(2);
+            }
+            pl->display();
+            lastTime = now;
+        }
+    }
+
+    while (1)
+    {
+
+        sleep(2);
+    }
+}
+
+//void display_pl(ProcessesList *pl)
+//{
+//    int i = 0;
+//    int lastTime = 0;
+
+//    while (1)
+//    {
+//        int now = clock()/CLOCKS_PER_SEC;
+//        if (now - lastTime > 0)
+//        {
+//          pl->display();
+//          lastTime = now;
+//        }
+//    }
+//}

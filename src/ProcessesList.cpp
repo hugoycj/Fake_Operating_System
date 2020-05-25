@@ -108,7 +108,7 @@ void ProcessesList::sort()
 */
 void ProcessesList::display()
 {
-    printf("\n|ID |Priority  |Name    |State  |Arrive Time |Run Time |Start Time |End Time |\n");
+    printf("\n|ID |Priority  |Name    |State  |Arrive |Run |Start Time |End Time |\n");
     if (isEmpty())
         return;
     else
@@ -125,7 +125,7 @@ void ProcessesList::show_single_pcb(ProcessControlBlock &pr)
 {
     printf("|%d  ", pr.process_id);
     printf("|%f  ", pr.process_priority);
-    printf("|%s\t", pr.process_name.c_str());
+    printf("|%s", pr.process_name.c_str());
     printf("|%c\t", pr.process_state);
     printf("|%d\t", (int) difftime(present_time, pr.process_arrive_time));
     printf("|%d\t", pr.process_run_time);
@@ -139,10 +139,12 @@ void ProcessesList::show_single_pcb(ProcessControlBlock &pr)
 *
 *  the parameter is a class tuple of PCB, no return value
 */
-void ProcessesList::output()
+PCB ProcessesList::output()
 {
-    Process_List[0].process_state = (char) 'R';
-/// Return PCB
+    PCB temp =  Process_List[0];
+    vector<PCB>::iterator k = Process_List.begin();
+    Process_List.erase(k);//删除第一个元素
+    return temp;
 }
 
 /**
@@ -182,11 +184,9 @@ void ProcessesList::push(ProcessControlBlock pcb)
 
 int ProcessesList::get_cur_id()
 {
-    int temp = current_id;
-    current_id ++;
     return current_id;
 }
 bool ProcessesList::isEmpty()
 {
-       return (size == 0);
+    return (size == 0);
 }
