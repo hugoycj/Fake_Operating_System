@@ -20,7 +20,6 @@ class ProcessesList
 {
 public:
     ProcessesList();
-	// TODO: 完成对应函数
 	void input(); /* 进程控制块插入函数*/	
     void sort();  /* 对进程进行优先级排列函数*/
     void display(); /*显示当前所有等待进程*/
@@ -28,8 +27,10 @@ public:
 	void clean(); /*清空所有进程*/
     void calculate_Priority();
     bool isEmpty();
+    void push(ProcessControlBlock pcb);
     int size_of_tuple(ProcessControlBlock Process_List[100]);
     void show_single_pcb(ProcessControlBlock &pr);
+    int get_cur_id();
 private:
     std::vector<ProcessControlBlock> Process_List;
     int size;

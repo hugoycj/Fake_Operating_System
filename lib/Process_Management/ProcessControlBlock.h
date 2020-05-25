@@ -17,36 +17,39 @@
 
 #include <string> 
 #include <time.h>
-//#include "Process.h"
+#include "Process.h"
 
 #ifndef PROCESSCONTROLBLOCK_H
 #define PROCESSCONTROLBLOCK_H
 
-
 class ProcessControlBlock
 {
 public:
-    ProcessControlBlock(char &name, int runtime,  void *process)
+    ProcessControlBlock(int cur_id, string name, int runtime)
     {
-        process_id = -1;
-        process_name[10] = name;
+        process_id = cur_id;
+        process_name = name;
         process_state = 'W';
         process_run_time = runtime;
         process_arrive_time = time(&process_arrive_time);
-        process_link=process; //指向空指针
+//        process_link=process; //指向空指针
         process_end_time = -1; //-1表示未开始
         process_priority = 999;//999代表最小，1代表最大
     }
 
 	int process_id; ///< Process unique ID
-	char process_name[10]; ///< The same as the program name, which might be the same as the other process
+    string process_name; ///< The same as the program name, which might be the same as the other process
     char process_state; ///< "W", "R", "F"
     time_t process_arrive_time; ///< the process preparing finished time
     int process_run_time; ///< how much time the process cost
     time_t process_end_time; ///< time when process end to run
     float process_priority; ///< priority
-    void *process_link; ///< link to process
-	
+//    void *process_link; ///< link to process
+
+    int get_id()
+    {
+        return process_id;
+    }
 private:
 };
 

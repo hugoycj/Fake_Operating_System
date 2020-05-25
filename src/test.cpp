@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <Process.h>
 #include <ProcessControlBlock.h>
+#include <ProcessesList.h>
 
 using namespace std;
 typedef ProcessControlBlock PCB;
@@ -15,8 +16,13 @@ vector<double> get_one_col(vector<vector<double>> matrix, int col);
  * @param mode
  * One test function is one process, it include: creating process and PCB
  */
-void test(int mode)
+void test(int mode, ProcessesList *pl)
 {
+    string type;
+    int size;
+    int cur_id;
+    cur_id = pl->get_cur_id();
+
     /* Mode 1: Simple Calculation */
     if (mode == 1)
     {
@@ -26,8 +32,7 @@ void test(int mode)
     else if (mode == 2)
     {
         vector<double> tempA, tempB;
-        int size;
-
+        type ="mtx_mult";
 //        vector<vector<double>> A, B, C;
 //        A = matrix_input(1, 3);
 //        B = matrix_input(3, 1);
@@ -41,19 +46,23 @@ void test(int mode)
         tempB = {1, 2, 3};
         size = sizeof(tempA);
 
-        static Process<vector<double>, vector<double>, double>  p1(tempA, tempB, "mtx_mult");
-        double (*Process<vector<double>, vector<double>, double>::pf1)() = p1.run_process();//普通的函数指针
-//        PCB pcb1('mtx_mult', size, p1);
+        static Process<vector<double>, vector<double>, double>  p1(tempA, tempB, type );
+        PCB pcb1(cur_id, type, size);
+        pl->push(pcb1);
     }
     /* Mode 3: Matrix invert */
     else if (mode == 3)
     {
+        type = "mtx_inv";
         vector<vector<double>> A, result;
         A = { {5, -2, 2, 7},
              {1, 0, 0, 3},
              {-3, 1, 5, 0},
              {3, -1, -9, 4}};
+        size = A.size()^2;
         static Process<vector<vector<double>>, int, vector<vector<double>>>  P2(A, 0, "mtx_inv");
+        PCB pcb2(cur_id, type, size);
+        pl->push(pcb2);
     }
 }
 

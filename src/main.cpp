@@ -12,6 +12,7 @@
 void calculation_memory_test();
 
 int main(int argc, char *argv[]) {
+
     /* Desktop GUI Part*/
 //    QApplication a(argc, argv);
 //    MainWindow w;
@@ -21,8 +22,9 @@ int main(int argc, char *argv[]) {
 //    return a.exec();
 
     /* Process Management Test Part*/
-//    ProcessesList pl;
-//    std::cout << "Running" << std::endl;
+    int mode;
+    ProcessesList pl;
+    std::cout << "Running" << std::endl;
 //    pl.input();
 //    pl.display();
 
@@ -31,7 +33,13 @@ int main(int argc, char *argv[]) {
 //    calculation_memory_test();
 
     /* test module */
-    test(2);
+    while(1)
+    {
+        cout << "Please input test mode: ";
+        cin >> mode;
+        test(mode,&pl);
+        pl.display();
+    }
     return 0;
 };
 

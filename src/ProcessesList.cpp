@@ -19,7 +19,7 @@ typedef ProcessControlBlock PCB;
 ProcessesList::ProcessesList()
 {
     size = 0;
-    current_id = 1;
+    current_id = 0;
     char tmp[64];
     time(&start_time);
     printf("Global start time is:");
@@ -125,7 +125,7 @@ void ProcessesList::show_single_pcb(ProcessControlBlock &pr)
 {
     printf("|%d  ", pr.process_id);
     printf("|%f  ", pr.process_priority);
-    printf("|%s\t", pr.process_name);
+    printf("|%s\t", pr.process_name.c_str());
     printf("|%c\t", pr.process_state);
     printf("|%d\t", (int) difftime(present_time, pr.process_arrive_time));
     printf("|%d\t", pr.process_run_time);
@@ -171,6 +171,21 @@ void ProcessesList::calculate_Priority()
     }
 }
 
+void ProcessesList::push(ProcessControlBlock pcb)
+{
+    Process_List.push_back(pcb);
+    size++;
+    current_id++;
+    calculate_Priority();
+    sort(); //调用sort函数
+}
+
+int ProcessesList::get_cur_id()
+{
+    int temp = current_id;
+    current_id ++;
+    return current_id;
+}
 bool ProcessesList::isEmpty()
 {
        return (size == 0);
