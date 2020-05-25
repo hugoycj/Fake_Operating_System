@@ -68,9 +68,7 @@ void MainWindow::clickMemory()
 {
     std::cout << "Clicked Memory Displayer" << std::endl;
 //    Qt::WindowFlags m_flags = windowFlags();
-    MappingDisplayer *t = new MappingDisplayer(current_line_num);
-
-    current_line_num++;
+    MappingDisplayer *t = new MappingDisplayer();
 //    t->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
 //    t->show();
 }

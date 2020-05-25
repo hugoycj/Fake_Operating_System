@@ -67,8 +67,7 @@ BAD_CHARS ~= s|[a-zA-Z0-9_ ().\/:;-]+|
 # (student's source code can be put into project root, or src/ subfolder)
 SOURCES *= $$files($$PWD/src/*.cpp, true)
 
-HEADERS *= $$files($$PWD/lib/Process_Management/*.h, true) \
-    lib/MappingDisplayer.h
+HEADERS *= $$files($$PWD/lib/Process_Management/*.h, true)
 HEADERS *= $$files($$PWD/lib/*.h, true)
 
 # directories examined by Qt Creator when student writes an #include statement

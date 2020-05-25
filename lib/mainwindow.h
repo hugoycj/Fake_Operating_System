@@ -14,7 +14,6 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    int current_line_num = 0;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 

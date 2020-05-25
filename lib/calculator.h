@@ -36,4 +36,4 @@ double * calculate(double data_1, double data_2, string type);
 double mtx_mult(vector<double> vec1, vector<double> vec2);
 
 // matrix inverse
-vector<vector<double>> mtx_inv(vector<vector<double>> A);
+vector<vector<double>> mtx_inv(int N, vector<vector<int>> A);

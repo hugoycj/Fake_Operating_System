@@ -48,25 +48,25 @@ void calculation_memory_test() {
     mtx_mult(vec1, vec2);
 
     // test mtx_inv
-    vector<vector<double>> A =
+    vector<vector<int>> A =
     { {5, -2, 2, 7},
       {1, 0, 0, 3},
       {-3, 1, 5, 0},
       {3, -1, -9, 4}};
-    mtx_inv(A);
+    mtx_inv(4,A);
 
     // test mtx_inv with memory expansion
     srand(1);
     int size = 5;
-    vector<vector<double>> B;
+    vector<vector<int>> B;
     for (int x=0; x<size; x++) {
-        vector<double> buf;
+        vector<int> buf;
         for (int y=0; y < size; y++) {
-            buf.push_back(double((rand() % (63-0+1)) + 0));
+            buf.push_back(int((rand() % (63-0+1)) + 0));
         }
         B.push_back(buf);
     }
-    mtx_inv(B);
+    mtx_inv(size,B);
 };
 
 
