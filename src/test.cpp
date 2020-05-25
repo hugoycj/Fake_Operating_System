@@ -2,8 +2,11 @@
 #include <lib/calculator.h>
 #include <assert.h>
 #include <Process.h>
+#include <ProcessControlBlock.h>
 
 using namespace std;
+typedef ProcessControlBlock PCB;
+
 vector<vector<double>> matrix_input(int row, int col);
 vector<double> get_one_col(vector<vector<double>> matrix, int col);
 
@@ -22,26 +25,25 @@ void test(int mode)
     /* Mode 2: Matrix multiplication */
     else if (mode == 2)
     {
-        vector<vector<double>> A, B, C;
         vector<double> tempA, tempB;
-        int result_r, result_c, temp_result;
+        int size;
 
+//        vector<vector<double>> A, B, C;
 //        A = matrix_input(1, 3);
 //        B = matrix_input(3, 1);
 //        result_r = A.size();
 //        result_c = B[0].size();
-
 //        cout << "Size of result is: " << result_c << "*" << result_r << endl;
-
 //        tempA = A[0];
 //        tempB = get_one_col(B, 1);
+
         tempA = {1, 2, 1};
         tempB = {1, 2, 3};
+        size = sizeof(tempA);
 
-        Process<vector<double>, vector<double>, double>  P1(tempA, tempB, "mtx_mult");
-        temp_result = P1.run_process();
-
-        cout << "Result is: " << temp_result << endl;
+        static Process<vector<double>, vector<double>, double>  p1(tempA, tempB, "mtx_mult");
+        double (*Process<vector<double>, vector<double>, double>::pf1)() = p1.run_process();//普通的函数指针
+//        PCB pcb1('mtx_mult', size, p1);
     }
     /* Mode 3: Matrix invert */
     else if (mode == 3)
@@ -51,8 +53,7 @@ void test(int mode)
              {1, 0, 0, 3},
              {-3, 1, 5, 0},
              {3, -1, -9, 4}};
-        Process<vector<vector<double>>, int, vector<vector<double>>>  P2(A, 0, "mtx_inv");
-        result = P2.run_process();
+        static Process<vector<vector<double>>, int, vector<vector<double>>>  P2(A, 0, "mtx_inv");
     }
 }
 
@@ -113,15 +114,3 @@ vector<double> get_one_col(vector<vector<double>> matrix, int col)
     assert(result.size() == r);
     return result;
 }
-
-/*
- * @brief Used to get a input matrix
- * @param row #row
- * @param col #col
- * @return the matrix
- */
-template <class T>
-void matrix_split_and_calculate(vector<vector<T>> A, vector<vector<T>> B)
-{
-
-};

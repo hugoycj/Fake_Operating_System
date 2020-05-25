@@ -26,12 +26,14 @@
 class ProcessControlBlock
 {
 public:
-    ProcessControlBlock()
+    ProcessControlBlock(char &name, int runtime,  void *process)
     {
         process_id = -1;
-        process_name[10] = 'null';
-        process_state = '\0';
-//        process_link=NULL; //指向空指针
+        process_name[10] = name;
+        process_state = 'W';
+        process_run_time = runtime;
+        process_arrive_time = time(&process_arrive_time);
+        process_link=process; //指向空指针
         process_end_time = -1; //-1表示未开始
         process_priority = 999;//999代表最小，1代表最大
     }
@@ -43,7 +45,7 @@ public:
     int process_run_time; ///< how much time the process cost
     time_t process_end_time; ///< time when process end to run
     float process_priority; ///< priority
-//	Process *process_link; ///< link to process
+    void *process_link; ///< link to process
 	
 private:
 };

@@ -34,43 +34,43 @@ ProcessesList::ProcessesList()
  */
 void ProcessesList::input()
 {
-    int i,num;
-    char ch;
-    std::cout << "\n请输入进程个数:";
-    scanf("%d", &num);
-    for(i=0;i<num;i++)
-    {
-        PCB pr= PCB();
-        char tmp[64];
-//        printf("输入进程名:");
-//        scanf("%s",pr.process_name);
+//    int i,num;
+//    char ch;
+//    std::cout << "\n请输入进程个数:";
+//    scanf("%d", &num);
+//    for(i=0;i<num;i++)
+//    {
+//        PCB pr= PCB();
+//        char tmp[64];
+////        printf("输入进程名:");
+////        scanf("%s",pr.process_name);
 
-        printf("进程到达时间为");
-        time(&pr.process_arrive_time);
-        strftime(tmp, sizeof(tmp), "%Y-%m-%d %H:%M:%S", localtime(&pr.process_arrive_time));
-        std::cout << tmp << std::endl;
+//        printf("进程到达时间为");
+//        time(&pr.process_arrive_time);
+//        strftime(tmp, sizeof(tmp), "%Y-%m-%d %H:%M:%S", localtime(&pr.process_arrive_time));
+//        std::cout << tmp << std::endl;
 
-        printf("进程运行时间为");
-        scanf("%d",&pr.process_run_time);
-        while( (pr.process_arrive_time) < 0 )
-        {
-            while( (ch=getchar()) != '\n' && ch!=EOF);/*清除键盘输入缓冲区*/
-            printf("进程运行时间必须非负数，请重新输入:");
-            scanf("%d",&pr.process_arrive_time);
-        }
-        printf("\n");
+//        printf("进程运行时间为");
+//        scanf("%d",&pr.process_run_time);
+//        while( (pr.process_arrive_time) < 0 )
+//        {
+//            while( (ch=getchar()) != '\n' && ch!=EOF);/*清除键盘输入缓冲区*/
+//            printf("进程运行时间必须非负数，请重新输入:");
+//            scanf("%d",&pr.process_arrive_time);
+//        }
+//        printf("\n");
 
-        pr.process_state='W'; //Wait等待标志
-        pr.process_id = current_id;
-//        pr.process_link=NULL; //指向空指针
-        pr.process_end_time = -1; //-表示未结束
-        pr.process_priority = 0;//0代表最小，越大优先级越高
-        Process_List.push_back(pr);
-        size++;
-        current_id++;
-        calculate_Priority();
-        sort(); //调用sort函数
-    }
+//        pr.process_state='W'; //Wait等待标志
+//        pr.process_id = current_id;
+////        pr.process_link=NULL; //指向空指针
+//        pr.process_end_time = -1; //-表示未结束
+//        pr.process_priority = 0;//0代表最小，越大优先级越高
+//        Process_List.push_back(pr);
+//        size++;
+//        current_id++;
+//        calculate_Priority();
+//        sort(); //调用sort函数
+//    }
 };
 
 /**
