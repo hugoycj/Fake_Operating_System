@@ -17,16 +17,17 @@ public:
     T3 run_process(T1 in_A, T2 in_B, string type)
     {
         T3 result;
-        if (calculate_type == "mtx_mult")
-//TODO: fix bug
-//           result = mtx_mult(A, B);
-            std::cout << "pass" << endl;
-        else if (calculate_type == "mtx_inv")
-//           result = mtx_inv(2, A);
-            std::cout << "pass" << endl;
-        else
-//           result = calculate(A, B, calculate_type);
-            std::cout << "pass" << endl;
+        caluclate(A, B, type);
+//        if (calculate_type == "mtx_mult")
+////TODO: fix bug
+////           result = mtx_mult(A, B);
+//            std::cout << "pass" << endl;
+//        else if (calculate_type == "mtx_inv")
+////           result = mtx_inv(2, A);
+//            std::cout << "pass" << endl;
+//        else
+////           result = calculate(A, B, calculate_type);
+//            std::cout << "pass" << endl;
         return result;
     }
 

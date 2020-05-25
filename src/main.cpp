@@ -14,7 +14,7 @@
 /**
  * TODO:
  * 1. 解决输入输出死锁问题
- * 2. 解决进程保存问题
+ * 2. 解决进程索引问题
  * 3. 测试进程运行
  */
 
@@ -45,6 +45,9 @@ int main(int argc, char *argv[]) {
 //    calculation_memory_test();
 
     /* test module */
+//    test(2, &pl);
+//    test(3, &pl);
+//    test(2, &pl);
     thread major(run, &pl);
     thread t1(testAPP, &pl);
     t1.join();
@@ -111,13 +114,13 @@ void run(ProcessesList *pl)
         int now = clock()/CLOCKS_PER_SEC;
         if (now - lastTime > 0)
         {
+            pl->display();
             if (!pl->isEmpty())
             {
                 pl->output();
                 cout << "runed a process" << endl;
                 sleep(2);
             }
-            pl->display();
             lastTime = now;
         }
     }
@@ -128,19 +131,3 @@ void run(ProcessesList *pl)
         sleep(2);
     }
 }
-
-//void display_pl(ProcessesList *pl)
-//{
-//    int i = 0;
-//    int lastTime = 0;
-
-//    while (1)
-//    {
-//        int now = clock()/CLOCKS_PER_SEC;
-//        if (now - lastTime > 0)
-//        {
-//          pl->display();
-//          lastTime = now;
-//        }
-//    }
-//}

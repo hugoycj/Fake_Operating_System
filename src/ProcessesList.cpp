@@ -142,8 +142,8 @@ void ProcessesList::show_single_pcb(ProcessControlBlock &pr)
 PCB ProcessesList::output()
 {
     PCB temp =  Process_List[0];
-    vector<PCB>::iterator k = Process_List.begin();
-    Process_List.erase(k);//删除第一个元素
+    Process_List.erase(Process_List.begin());
+    size--;
     return temp;
 }
 
