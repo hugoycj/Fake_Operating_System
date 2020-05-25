@@ -26,13 +26,9 @@ using namespace std;
 
 // calculate with the gived data and calculation type
 // add, sub, div, mult
-<<<<<<< HEAD
-double * calculate(double data_1, double data_2, string type);
-=======
 double * calculate(vector<double> data_vec_1, vector<double> data_vec_2, string type);
 
 
->>>>>>> Calculator
 
 /* Matrix Operation */
 
@@ -40,8 +36,4 @@ double * calculate(vector<double> data_vec_1, vector<double> data_vec_2, string 
 double mtx_mult(vector<double> vec1, vector<double> vec2);
 
 // matrix inverse
-<<<<<<< HEAD
-vector<vector<double>> mtx_inv(int N, vector<vector<int>> A);
-=======
 vector<vector<double>> mtx_inv(vector<vector<double>> A);
->>>>>>> Calculator

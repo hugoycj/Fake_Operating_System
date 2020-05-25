@@ -18,19 +18,12 @@ class MappingDisplayer : public QMainWindow
 {
     Q_OBJECT
 private:
-<<<<<<< HEAD
-=======
     int current_line_num = 0;
->>>>>>> Calculator
 
 
 public:
     MappingDisplayer(const MappingDisplayer& obj);
-<<<<<<< HEAD
-    MappingDisplayer(QWidget *parent = 0);
-=======
     MappingDisplayer(int current_line_num, QWidget *parent = 0);
->>>>>>> Calculator
     ~MappingDisplayer();
 };
 
