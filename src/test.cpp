@@ -1,8 +1,10 @@
 #include <vector>
 #include <lib/calculator.h>
+#include <assert.h>
 
 using namespace std;
-vector<vector<int>> matrix_input(int row, int col);
+vector<vector<double>> matrix_input(int row, int col);
+vector<double> get_one_col(vector<vector<double>> matrix, int col);
 
 void test(int mode)
 {
@@ -14,16 +16,23 @@ void test(int mode)
     /* Mode 2: Matrix multiplication */
     else if (mode == 2)
     {
-        vector<vector<int>> A, B, C;
-        int result_r, result_c;
+        vector<vector<double>> A, B, C;
+        vector<double> tempA, tempB;
+        int result_r, result_c, temp_result;
 
-        A = matrix_input(1, 2);
-        B = matrix_input(2, 1);
+        A = matrix_input(1, 3);
+        B = matrix_input(3, 1);
 
         result_r = A.size();
         result_c = B[0].size();
 
-        cout << "Size of result is: " << result_c << "*" << result_r;
+        cout << "Size of result is: " << result_c << "*" << result_r << endl;
+
+        tempA = A[0];
+        tempB = get_one_col(B, 1);
+        temp_result = mtx_mult(tempA, tempB);
+
+        cout << "Result is: " << temp_result << endl;
     }
 
 }
@@ -35,12 +44,12 @@ void test(int mode)
  * @param col #col
  * @return the matrix
  */
-vector<vector<int>> matrix_input(int row, int col)
+vector<vector<double>> matrix_input(int row, int col)
 {
-    vector<vector<int>> matrix;
-    vector<int> v;
+    vector<vector<double>> matrix;
+    vector<double> v;
     matrix.clear();
-    int temp=0;
+    double temp=0;
     cout << "Please input a " << row << "*" << col << " matrix:" << endl;
     for (int i = 0; i < row; i++)
     {
@@ -68,6 +77,23 @@ vector<vector<int>> matrix_input(int row, int col)
    return matrix;
 };
 
+vector<double> get_one_col(vector<vector<double>> matrix, int col)
+{
+    vector<double> result;
+    int r,i,c;
+    double temp;
+
+    r = matrix.size();
+    c = matrix[0].size();
+    for (i = 0; i < r; i++)
+    {
+        temp = matrix[i][col-1];
+        result.push_back(temp);
+    }
+
+    assert(result.size() == r);
+    return result;
+}
 
 /*
  * @brief Used to get a input matrix
