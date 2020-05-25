@@ -3,13 +3,13 @@
 #include <QApplication>
 #include <iostream>
 
-#include "lib/allocator.h"
 #include "lib/mapper.h"
+#include "lib/allocator.h"
+#include "lib/calculator.h"
 
-void memory_management_test();
+void calculation_memory_test();
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     /* Desktop GUI Part*/
 //    QApplication a(argc, argv);
 //    MainWindow w;
@@ -26,65 +26,48 @@ int main(int argc, char *argv[])
 
 
     /* memory management Part */
-    memory_management_test();
-}
+    calculation_memory_test();
 
-void memory_management_test() {
-        // construct allocator
-        FSB_allocator a1;
+    return 0;
+};
 
-        // test the number of remaining blocks in 8-byte block set
-        // allocate a 8-byte memory block
-        a1.alloc(3);
-        assert(a1.loop_test(0) == 15);
-        a1.alloc(7);
-        assert(a1.loop_test(0) == 14);
-        a1.alloc(8);
-        assert(a1.loop_test(0) == 13);
+void calculation_memory_test() {
+    // test basic calculation types
+    vector<double> a = {-100};
+    vector<double> b = {2};
+    calculate(a, b, "mult");
+//    calculate(-1,2,"add");
+//    calculate(1,2,"sub");
+//    calculate(-4,2,"div");
+//    calculate(100,-2,"mult");
+//    calculate(10,200,"sub");
 
-        int * ptr = (int *) a1.alloc(8);
-        a1.dealloc(ptr);
-        assert(a1.loop_test(0) == 13);
+    // test matrix calculation types
+    vector<double> vec1 = {1, 2, 1};
+    vector<double> vec2 = {1, 2, 3};
+//    mtx_mult(vec1, vec2);
+    calculate(vec1, vec2, "mtx_mult");
 
-    //    // test 16-bytes block
-    //    a1.alloc(9);
-    //    assert(a1.loop_test(1) == 15);
-    //    a1.alloc(15);
-    //    assert(a1.loop_test(1) == 14);
-    //    a1.alloc(16);
-    //    assert(a1.loop_test(1) == 13);
+//    // test mtx_inv
+//    vector<vector<double>> A =
+//    { {5, -2, 2, 7},
+//      {1, 0, 0, 3},
+//      {-3, 1, 5, 0},
+//      {3, -1, -9, 4}};
+//    mtx_inv(A);
 
-    //    int * ptr2 = (int *) a1.alloc(14);
-    //    a1.dealloc(ptr2);
-    //    assert(a1.loop_test(1) == 13);
+//    // test mtx_inv with memory expansion
+//    srand(1);
+//    int size = 5;
+//    vector<vector<double>> B;
+//    for (int x=0; x<size; x++) {
+//        vector<double> buf;
+//        for (int y=0; y < size; y++) {
+//            buf.push_back(double((rand() % (63-0+1)) + 0));
+//        }
+//        B.push_back(buf);
+//    }
+//    mtx_inv(B);
+};
 
-    //    // test 32-bytes block
-    //    a1.alloc(17);
-    //    assert(a1.loop_test(2) == 15);
-    //    a1.alloc(31);
-    //    assert(a1.loop_test(2) == 14);
-    //    a1.alloc(32);
-    //    assert(a1.loop_test(2) == 13);
 
-    //    a1.alloc(2047);
-    //    assert(a1.loop_test(8) == 15);
-    //    a1.alloc(2048);
-    //    assert(a1.loop_test(8) == 14);
-
-    //    a1.alloc(4097);
-    //    assert(a1.loop_test(9) == 15);
-    //    a1.alloc(5152);
-    //    assert(a1.loop_test(9) == 14);
-    //    a1.alloc(8192);
-    //    assert(a1.loop_test(9) == 13);
-
-    //    a1.alloc(2049);
-    //    assert(a1.loop_test(10) == 15);
-    //    a1.alloc(4095);
-    //    assert(a1.loop_test(10) == 14);
-    //    a1.alloc(4096);
-    //    assert(a1.loop_test(10) == 13);
-//        VM m1;
-//        m1.mapper();
-        cout<<"Pass test"<<endl;
-}

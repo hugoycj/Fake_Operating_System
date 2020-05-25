@@ -3,6 +3,7 @@
         <file>background.jpg</file>
         <file>icon/TextBook.ico</file>
         <file>icon/FileEplorer.ico</file>
+        <file>icon/MemoryDisplayer.ico</file>
     </qresource>
     <qresource prefix="/">
         <file>tool/undo.ico</file>

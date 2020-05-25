@@ -40,15 +40,6 @@ struct block {
    void alloc_data_mem(size_t size) {
         data_ptr = std::malloc(size);
    };
-
-   // simulate the process of storage
-   template <typename ValueType>
-   void data_test(size_t size, ValueType test_data) {
-       std::cout << "data size: " << sizeof(test_data) << std::endl;
-       data_ptr = std::malloc(size);
-       *(ValueType *) data_ptr = test_data;
-//       std::cout << "end of data_tests func" << std::endl;
-   };
 };
 
 
@@ -75,12 +66,14 @@ public:
    // Take in pointer given by malloc and delete it
    // Add one block back to the corresponding free-list
    template <typename ValueType>
-   void dealloc(ValueType * ptr) {
+   void dealloc(ValueType * ptr, size_t size) {
+       std::cout << "Start dealloc" << std::endl;
+
        // get the proper size that should be deallocated
-       size_t dealloc_size = sizeof(*ptr);
-       std::cout<<"dealloc_size: "<<dealloc_size<<std::endl;
+       size_t dealloc_size = size;
+//       std::cout<<"dealloc_size: "<<dealloc_size<<std::endl;
        size_t block_header_idx = memory_alignment(dealloc_size);
-       std::cout<<"block_header_idx: "<<block_header_idx<<std::endl;
+//       std::cout<<"block_header_idx: "<<block_header_idx<<std::endl;
 
        // Add one block back to the corresponding free-list
        block * new_free_block = new block;
@@ -93,6 +86,8 @@ public:
 
        // set the deallocated pointer as nullptr
        free(ptr);
+       display();
+       std::cout << "" << std::endl;
    };
 
    // adjust the size of allocated memory region and return a new pointer
@@ -104,7 +99,7 @@ public:
    block* get_block_map(int idx);
 
 private:
-   std::vector<size_t> BLOCK_SIZES = {8, 16, 32, 64, 128, 256, 512, 1024, 2048};
+   std::vector<size_t> BLOCK_SIZES = {8, 16, 32, 64, 128};
    std::vector<block*> block_map; // vector of different block pointer, each points to a free-list
 
    // Round the required size to the nearest block size,
@@ -116,6 +111,9 @@ private:
 
    // calculate the proper size for given mem_size
    size_t calculate_mem_size(size_t mem_size);
+
+   // display block num info
+   void display();
 
 };
 

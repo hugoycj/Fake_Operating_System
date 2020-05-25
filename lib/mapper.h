@@ -19,28 +19,28 @@ using namespace std;
  * 2nd page number = vir_addr[21:12]
  * offset = vir_addr[11:0]
  *
- * 
+ *
  * Physical Address: 28-bit
  * 0000 0000 0000 1010 0000 0000 1101
  * ------------------- --------------
  *  physical page no.   page offset
- * 
+ *
  */
 
 
 /* Multi-level Page Table (1st level and second level)
- * There is one 1st level page table with 64 PTE (page table entries) 
+ * There is one 1st level page table with 64 PTE (page table entries)
  * because the page number is 6-bit binary numbers 111111(bin) = 63(dec)
- * 
+ *
  *         |-----------|
  * 0x0000  |           |
- *         |-----------| 
+ *         |-----------|
  * 0x0001  |           |
  *         |-----------|
  * 0x0002  |           |
- *         |-----------| 
+ *         |-----------|
  * 0x0003  |           |
- *         |-----------| 
+ *         |-----------|
  * 0x0004  |           |
  *         |-----------|
  *         .           .
@@ -49,11 +49,11 @@ using namespace std;
  *         |           |
  *         |-----------|
  * 0x0062  |           |
- *         |-----------| 
+ *         |-----------|
  * 0x0063  |           |
- *         |-----------| 
- * 
- * 
+ *         |-----------|
+ *
+ *
  * There are 64 2nd-level page tables.
  */
 
@@ -65,7 +65,7 @@ using namespace std;
  * |----------|-------|
  * | vpage_no | frame |
  * |----------|-------|
- * 
+ *
  * Since there PTSize is 64, 64 TLB are required.
  */
 
@@ -75,12 +75,12 @@ class VM {
 private:
     // VM size: (64*64)*4/1024 = 16MB
     // PM size: 8 MB
-    static const int TLBSize = 16;
+    static const int TLBSize = 8;
     const int PTSize = 64;
     const int FTSize = 64;
     const int page_size = 4*1024; // 4*1024 byte /4 KB each page, total 2048 pages
 
-    int TLBTable [64][8][2];
+    int TLBTable [64][8][2] = {{{0}}};
     int LV1_PT [64];
     int FrameTable [64];
 
@@ -95,11 +95,8 @@ private:
 
     // fpage
     int vpage, fpage, offset;
-    // index used for searching element in TLB table
-    int tlbIndex = 0;
 
-    // intialize one LV2 page table according to the given VD
-    void random_init(int id);
+    int tlbIndexSet [64] = {0};
 
 public:
 
@@ -122,7 +119,25 @@ public:
     void updateTLB(int index, int page, int frame);
 
     // core function to perform translation from virtual to physical
-    void mapper();
+    void mapper_test();
 
+    void zero_extend(string &target, unsigned int len);
 
+    // intialize one LV2 page table according to the given VD
+    void random_init(int id);
+
+    // get value in lv1 pt with idx
+    int lv1_pt_get(int idx);
+
+    // get value of fpage
+    int fpage_get();
+
+    // set value fo fpage
+    void fpage_set(int value);
+
+    // get lv2_pt
+    vector<int> lv2_pt_get(int index);
+
+    // get TLB table
+    vector<int> tlb_get(int index, int row_idx);
 };
