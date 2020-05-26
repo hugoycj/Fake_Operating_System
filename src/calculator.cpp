@@ -15,56 +15,82 @@
 
 using namespace std;
 
+double dot_mult(vector<double> vec1, vector<double> vec2);
+
 /* Basic Arithmetic Operation */
 // calculate with the gived data and calculation type
 double * calculate(vector<double> data_vec_1, vector<double> data_vec_2, string type) {
-    // construct the alloc
-    FSB_allocator allocator;
-    size_t size = 8;
-    double data_1 = data_vec_1[0];
-    double data_2 = data_vec_2[0];
-
-    // alloc memory to store value and result
-    double * data1_ptr = (double *) allocator.alloc(size);
-    double * data2_ptr = (double *) allocator.alloc(size);
-    double * res_ptr = (double *) allocator.alloc(size);
-
-    // put specific value into allocated memory
-    *data1_ptr = data_1;
-    *data2_ptr = data_2;
-
-    // calculate the result
     cout << "Calculation type: " << type << endl;
-    if (type == "add") {
-        *res_ptr = *data1_ptr + *data2_ptr;
+    // construct the alloc
+    FSB_allocator * allocator_ptr = new FSB_allocator();
+    FSB_allocator allocator = * allocator_ptr;
+
+    if (type == "mtx_mult") {
+        size_t vec_size = sizeof(vector<double>) + 8*(data_vec_1.size());
+
+        // alloc memory to store data and result
+        vector<double> * data1_ptr = (vector<double> *) allocator.alloc(vec_size);
+        vector<double> * data2_ptr = (vector<double> *) allocator.alloc(vec_size);
+        double * res_ptr = (double *) allocator.alloc(8);
+
+        // put data into allocated memory
+        *data1_ptr = data_vec_1;
+        *data2_ptr = data_vec_2;
+
+        // calculate the result and store the value
+        *res_ptr = dot_mult(*data1_ptr, *data2_ptr);
+
+        allocator.dealloc(data1_ptr, vec_size);
+        allocator.dealloc(data2_ptr, vec_size);
+
+        cout << "result: " << *res_ptr << endl;
+        cout << "" << endl;
+
+        return res_ptr;
     }
 
-    else if (type == "sub") {
-        *res_ptr = *data1_ptr - *data2_ptr;
+    else {
+        size_t size = 8;
+
+        double data_1 = data_vec_1[0];
+        double data_2 = data_vec_2[0];
+
+        // alloc memory to store value and result
+        double * data1_ptr = (double *) allocator.alloc(size);
+        double * data2_ptr = (double *) allocator.alloc(size);
+        double * res_ptr = (double *) allocator.alloc(size);
+
+        // put specific value into allocated memory
+        *data1_ptr = data_1;
+        *data2_ptr = data_2;
+
+        // calculate the result
+        if (type == "add") {
+            *res_ptr = *data1_ptr + *data2_ptr;
+        }
+
+        else if (type == "sub") {
+            *res_ptr = *data1_ptr - *data2_ptr;
+        }
+
+        else if (type == "div") {
+            *res_ptr = *data1_ptr / *data2_ptr;
+        }
+
+        else if (type == "mult") {
+            *res_ptr = (*data1_ptr) * (*data2_ptr);
+        }
+
+        // dealloc the memory
+        allocator.dealloc(data1_ptr, 8);
+        allocator.dealloc(data2_ptr, 8);
+
+        cout << "result: " << *res_ptr << endl;
+        cout << "" << endl;
+        return res_ptr;
     }
 
-    else if (type == "div") {
-        *res_ptr = *data1_ptr / *data2_ptr;
-    }
-
-    else if (type == "mult") {
-        *res_ptr = (*data1_ptr) * (*data2_ptr);
-    }
-
-    else if (type == "mtx_mult") {
-        *res_ptr = mtx_mult(data_vec_1, data_vec_2);
-    }
-
-    // dealloc the memory
-    allocator.dealloc(data1_ptr, 8);
-    allocator.dealloc(data2_ptr, 8);
-
-    cout << "result: " << *res_ptr << endl;
-    cout << "" << endl;
-
-    return res_ptr;
 }
-
 
 /* Matrix Operation*/
 
@@ -76,27 +102,6 @@ double dot_mult(vector<double> vec1, vector<double> vec2) {
         result += vec1[i]*vec2[i];
     }
     return result;
-}
-
-// performing matrix mult, calculate the result of dot multiplication of one row and one column
-double mtx_mult(vector<double> vec1, vector<double> vec2) {
-    // construct the allocator
-    FSB_allocator allocator;
-    size_t vec_size = sizeof(vector<double>) + 4*(vec1.size());
-
-    // alloc memory to store data and result
-    vector<double> * data1_ptr = (vector<double> *) allocator.alloc(vec_size);
-    vector<double> * data2_ptr = (vector<double> *) allocator.alloc(vec_size);
-    double * res_ptr = (double *) allocator.alloc(8);
-
-    // put data into allocated memory
-    *data1_ptr = vec1;
-    *data2_ptr = vec2;
-
-    // calculate the result and store the value
-    *res_ptr = dot_mult(*data1_ptr, *data2_ptr);
-
-    return *res_ptr;
 }
 
 
@@ -127,10 +132,11 @@ void getCofactor(vector<vector<double>> A, vector<vector<double>> & temp, int p,
     }
 }
 
+
 /* Recursive function for finding determinant of matrix.
 n is current dimension of A[][]. */
-int determinant(vector<vector<double>> A, int n) {
-    int D = 0; // Initialize result
+double determinant(vector<vector<double>> A, int n) {
+    double D = 0; // Initialize result
 
     // Base case : if matrix contains single element
     if (n == 1) {
@@ -159,6 +165,9 @@ int determinant(vector<vector<double>> A, int n) {
 
 // Function to get adjoint of A[N][N] in adj[N][N].
 void adjoint(int N, vector<vector<double>> A, vector<vector<double>> & adj) {
+
+    cout << "start adjoint" << endl;
+
     if (N == 1) {
         adj[0][0] = 1;
         return;
@@ -183,6 +192,8 @@ void adjoint(int N, vector<vector<double>> A, vector<vector<double>> & adj) {
             adj[j][i] = (sign)*(determinant(temp, N-1));
         }
     }
+
+    cout << "endl of adjoint" << endl;
 }
 
 
@@ -190,7 +201,7 @@ void adjoint(int N, vector<vector<double>> A, vector<vector<double>> & adj) {
 // matrix is singular
 bool inverse(int N, vector<vector<double>> A, vector<vector<double>> & inverse) {
     // Find determinant of A[][]
-    int det = determinant(A, N);
+    double det = determinant(A, N);
     if (det == 0) {
         cout << "Singular matrix, can't find its inverse";
         return false;
@@ -206,7 +217,7 @@ bool inverse(int N, vector<vector<double>> A, vector<vector<double>> & inverse) 
     // Find Inverse using formula "inverse(A) = adj(A)/det(A)"
     for (int i=0; i<N; i++) {
         for (int j=0; j<N; j++) {
-            inverse[i][j] = adj[i][j]/double(det);
+            inverse[i][j] = adj[i][j]/(det);
         }
     }
 
@@ -231,13 +242,16 @@ void display(int N, vector<vector<T>> A) {
 
 
 vector<vector<double>> mtx_inv(vector<vector<double>> matrix) {
+    cout << "Calculation type: " << "mtx_inv" << endl;
+
     // get dim of matrix
     int N = matrix.size();
     // construct the allocator
-    FSB_allocator allocator;
+    FSB_allocator * allocator_ptr = new FSB_allocator();
+    FSB_allocator allocator = * allocator_ptr;
 
     // caluclate the size of matrixes
-    size_t size = sizeof (vector<vector<double>>) + (sizeof(vector<double>))*N + 4*N;
+    size_t size = sizeof (vector<vector<double>>) + (sizeof(vector<double>))*N + 8*N;
 
     // allocate memory for variables
     vector<vector<double>> * matrix_ptr = (vector<vector<double>> *) allocator.alloc(size);

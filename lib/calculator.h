@@ -25,15 +25,9 @@ using namespace std;
 /* Basic Arithmetic Operation */
 
 // calculate with the gived data and calculation type
-// add, sub, div, mult
+// add, sub, div, mult, mtx_mult
 double * calculate(vector<double> data_vec_1, vector<double> data_vec_2, string type);
 
-
-
 /* Matrix Operation */
-
-// matrix multiplication, dot operation for one rwo and one col
-double mtx_mult(vector<double> vec1, vector<double> vec2);
-
 // matrix inverse
 vector<vector<double>> mtx_inv(vector<vector<double>> A);

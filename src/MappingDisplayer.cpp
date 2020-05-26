@@ -1,7 +1,6 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
-#include <unistd.h>
 
 #include <QIcon>
 #include <QHBoxLayout>
@@ -72,7 +71,7 @@ MappingDisplayer::MappingDisplayer(int current_line_num, QWidget *parent)
     ifstream infile;
 //    string filename = "address_2.txt";
 //    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/address.txt";
-    string filename = "/Users/zxy/Desktop/Fake_Operating_System/src/address_2.txt";
+    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/address_2.txt";
 //    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/duplicated_address.txt";
 
     infile.open(filename.c_str());

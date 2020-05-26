@@ -69,6 +69,7 @@ void FSB_allocator::expand_mem(size_t mem_size) {
         current->link = next;
         current = next;
     };
+    cout<<"expand done!!"<<endl;
     display();
     cout << "" << endl;
 };
@@ -107,13 +108,13 @@ FSB_allocator::~FSB_allocator(){
             block * temp = head; // old first block
             head = head->link; // re-link the head to the next one
             block_count++;
-            delete(temp); // delete the old first head
+            temp = nullptr; // delete the old first head
         };
 
         // delete the head pointer
         block * mid = head;
         block_map[i] = nullptr;
-        delete(mid);
+        mid = nullptr;
     };
 };
 
@@ -194,8 +195,10 @@ void FSB_allocator::display() {
             i++;
             start = start->link;
         };
+        cout<<i+1<<"-th one:"<<endl;
         cout << BLOCK_SIZES[idx] << "-bytes list has : " << i << " blocks" << endl;
     }
+    cout<<"for loop done"<<endl;
 };
 
 

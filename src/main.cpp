@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     /* Process Management Test Part*/
     ProcessesList pl;
     std::cout << "Running" << std::endl;
-    test(1, &pl);
+//    test(1, &pl);
     test(2, &pl);
     thread major(run, &pl);
     thread t1(testAPP, &pl);

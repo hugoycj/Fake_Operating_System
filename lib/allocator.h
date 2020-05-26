@@ -86,6 +86,7 @@ public:
 
        // set the deallocated pointer as nullptr
        free(ptr);
+       ptr = nullptr;
        display();
        std::cout << "" << std::endl;
    };
