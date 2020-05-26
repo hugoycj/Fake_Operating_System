@@ -32,9 +32,9 @@ public:
         process_state = 'W';
         process_run_time = runtime;
         process_arrive_time = time(&process_arrive_time);
-        process_link = p; //指向空指针
-        process_end_time = -1; //-1表示未开始
-        process_priority = 999;//999代表最小，1代表最大
+        process_link = p;
+        process_end_time = -1;
+        process_priority = 999;
     }
 
 	int process_id; ///< Process unique ID

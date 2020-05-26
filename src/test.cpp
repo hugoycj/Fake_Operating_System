@@ -8,9 +8,13 @@
 
 using namespace std;
 typedef ProcessControlBlock PCB;
+using std::default_random_engine;
+using std::uniform_int_distribution;
 
 vector<vector<double>> matrix_input(int row, int col);
 vector<double> get_one_col(vector<vector<double>> matrix, int col);
+vector<double> single_vector_generator(int length);
+
 
 /*
  * @brief Used to test memory allocator and process management
@@ -23,25 +27,23 @@ void test(int mode, ProcessesList *pl)
     int size;
     int cur_id;
     cur_id = pl->get_cur_id();
+    vector<double> tempA, tempB;
 
     /* Mode 1: Simple Calculation */
     if (mode == 1)
     {
-
+        type ="mult";
+        tempA = single_vector_generator(1);
+        tempB = single_vector_generator(1);
+        size = 1;
+        static Process p0(tempA, tempB, type);
+        PCB pcb2(cur_id, type, size, &p0);
+        pl->push(pcb2);
     }
     /* Mode 2: Matrix multiplication */
     else if (mode == 2)
     {
-        vector<double> tempA, tempB;
         type ="mtx_mult";
-//        vector<vector<double>> A, B, C;
-//        A = matrix_input(1, 3);
-//        B = matrix_input(3, 1);
-//        result_r = A.size();
-//        result_c = B[0].size();
-//        cout << "Size of result is: " << result_c << "*" << result_r << endl;
-//        tempA = A[0];
-//        tempB = get_one_col(B, 1);
 
         tempA = {1, 2, 1};
         tempB = {1, 2, 3};
@@ -125,7 +127,26 @@ vector<double> get_one_col(vector<vector<double>> matrix, int col)
     return result;
 }
 
-vector<double> vector_generator(int lentgh)
+vector<double> single_vector_generator(int length)
 {
+    vector<double> v;
+    double temp=0;
+    v.clear();
+    for (int j = 0; j < length; j++)
+    {
+        srand( (unsigned)time( NULL ) );
+        temp = rand()%10;
+        v.push_back(temp);
 
+    }
+
+    cout << "The Matrix is:" << endl;
+    for (int j = 0; j < length; j++)
+    {
+        cout << v[j] << " ";
+
+    }
+    printf("\n");
+
+   return v;
 }

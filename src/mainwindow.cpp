@@ -18,26 +18,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /// Set textbook icon
     ui->setupUi(this);
-    QIcon TextIcon; //新建QIcon对象
-    TextIcon.addFile(tr(":/image/icon/TextBook.ico")); //让QIcon对象指向想要的图标
-    ui->TextbookButton->setIcon(TextIcon); //给按钮添加图标
-    ui->TextbookButton->setIconSize(QSize(50,50));//重置图标大小
+    QIcon TextIcon;
+    TextIcon.addFile(tr(":/image/icon/TextBook.ico"));
+    ui->TextbookButton->setIcon(TextIcon);
+    ui->TextbookButton->setIconSize(QSize(50,50));
     connect(ui->TextbookButton, &QPushButton::clicked,this, &MainWindow::clickTextbook);
     ui->TextbookLabel->setStyleSheet("color:white;");
 
     /// Set textbook icon
-    QIcon FileIcon; //新建QIcon对象
-    FileIcon.addFile(tr(":/image/icon/FileEplorer.ico")); //让QIcon对象指向想要的图标
-    ui->FileButton->setIcon(FileIcon); //给按钮添加图标
-    ui->FileButton->setIconSize(QSize(50,50));//重置图标大小
+    QIcon FileIcon;
+    FileIcon.addFile(tr(":/image/icon/FileEplorer.ico"));
+    ui->FileButton->setIcon(FileIcon);
+    ui->FileButton->setIconSize(QSize(50,50));
     connect(ui->FileButton, &QPushButton::clicked,this, &MainWindow::clickFile);
     ui->FileLabel->setStyleSheet("color:white;");
 
     /// Set memory_displayer icon
-    QIcon MemoryIcon; //新建QIcon对象
-    MemoryIcon.addFile(tr(":/image/icon/MemoryDisplayer.ico")); //让QIcon对象指向想要的图标
-    ui->DisplayerButton->setIcon(MemoryIcon); //给按钮添加图标
-    ui->DisplayerButton->setIconSize(QSize(50,50));//重置图标大小
+    QIcon MemoryIcon;
+    MemoryIcon.addFile(tr(":/image/icon/MemoryDisplayer.ico"));
+    ui->DisplayerButton->setIcon(MemoryIcon);
+    ui->DisplayerButton->setIconSize(QSize(50,50));
     connect(ui->DisplayerButton, &QPushButton::clicked,this, &MainWindow::clickMemory);
     ui->DisplayerLabel->setStyleSheet("color:white;");
 

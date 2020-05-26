@@ -11,13 +11,6 @@
 #include "test.cpp"
 #include "Process.h"
 
-/**
- * TODO:
- * 1. 解决输入输出死锁问题
- * 2. 解决进程索引问题
- * 3. 测试进程运行
- */
-
 using namespace std;
 void calculation_memory_test();
 void testAPP(ProcessesList *pl);
@@ -37,9 +30,7 @@ int main(int argc, char *argv[]) {
     /* Process Management Test Part*/
     ProcessesList pl;
     std::cout << "Running" << std::endl;
-    test(2, &pl);
-    test(2, &pl);
-    test(2, &pl);
+    test(1, &pl);
     test(2, &pl);
     thread major(run, &pl);
     thread t1(testAPP, &pl);
@@ -79,6 +70,7 @@ void run(ProcessesList *pl)
             {
                 pl->output();
                 cout << "runed a process" << endl;
+                sleep(5);
             }
             lastTime = now;
         }
