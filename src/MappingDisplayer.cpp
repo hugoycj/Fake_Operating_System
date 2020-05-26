@@ -29,8 +29,6 @@ string intToHex(int n) {
 MappingDisplayer::MappingDisplayer(int current_line_num, QWidget *parent)
     : QMainWindow(parent)
 {
-//    cout<<"???????"<<endl;
-
     // create a 64*9 table
     QTableWidget *table = new QTableWidget(64,10);
 
@@ -69,11 +67,7 @@ MappingDisplayer::MappingDisplayer(int current_line_num, QWidget *parent)
 
 
     ifstream infile;
-//    string filename = "address_2.txt";
-//    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/address.txt";
     string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/address_2.txt";
-//    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/duplicated_address.txt";
-
     infile.open(filename.c_str());
 
     VM mapper;

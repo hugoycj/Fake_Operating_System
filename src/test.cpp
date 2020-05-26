@@ -29,6 +29,9 @@ void test(int mode, ProcessesList *pl)
     cur_id = pl->get_cur_id();
     vector<double> tempA, tempB;
 
+    srand( (unsigned)time( NULL ) );
+    size = rand()%9 + 1;
+    cout << "Generate a matrix of size: " << size << endl;
     /* Mode 1: Simple Calculation */
     if (mode == 1)
     {
@@ -45,8 +48,8 @@ void test(int mode, ProcessesList *pl)
     {
         type ="mtx_mult";
 
-        tempA = {1, 2, 1};
-        tempB = {1, 2, 3};
+        tempA = single_vector_generator(size);
+        tempB = single_vector_generator(size);
         size = sizeof(tempA);
 
         static Process p1(tempA, tempB, type);

@@ -31,6 +31,10 @@ int main(int argc, char *argv[]) {
     ProcessesList pl;
     std::cout << "Running" << std::endl;
 //    test(1, &pl);
+    test(1, &pl);
+    test(2, &pl);
+    test(2, &pl);
+    test(2, &pl);
     test(2, &pl);
     thread major(run, &pl);
     thread t1(testAPP, &pl);
@@ -70,7 +74,7 @@ void run(ProcessesList *pl)
             {
                 pl->output();
                 cout << "runed a process" << endl;
-                sleep(5);
+                sleep(2);
             }
             lastTime = now;
         }

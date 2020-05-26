@@ -142,6 +142,8 @@ void ProcessesList::show_single_pcb(ProcessControlBlock &pr)
 PCB ProcessesList::output()
 {
     PCB temp =  Process_List[0];
+    Process * tempP = temp.process_link;
+
     temp.process_link->run_process();
     Process_List.erase(Process_List.begin());
     size--;
@@ -180,7 +182,7 @@ void ProcessesList::push(ProcessControlBlock pcb)
     size++;
     current_id++;
     calculate_Priority();
-    sort(); //调用sort函数
+    sort();
 }
 
 int ProcessesList::get_cur_id()
