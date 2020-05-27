@@ -67,12 +67,17 @@ BAD_CHARS ~= s|[a-zA-Z0-9_ ().\/:;-]+|
 # (student's source code can be put into project root, or src/ subfolder)
 SOURCES *= $$files($$PWD/src/*.cpp, true)
 
-HEADERS *= $$files($$PWD/lib/Process_Management/*.h, true) \
-    lib/MappingDisplayer.h
+HEADERS *= $$files($$PWD/lib/ProcessManagement/*.h, true)
+HEADERS *= $$files($$PWD/lib/GUI/*.h, true)
+HEADERS *= $$files($$PWD/lib/MemoryManagement/*.h, true)
+HEADERS *= $$files($$PWD/lib/TestApp/*.h, true)
 HEADERS *= $$files($$PWD/lib/*.h, true)
 
 # directories examined by Qt Creator when student writes an #include statement
-INCLUDEPATH *= $$PWD/lib/Process_Management/
+INCLUDEPATH *= $$PWD/lib/ProcessManagement/
+INCLUDEPATH *= $$PWD/lib/MemoryManagement/
+INCLUDEPATH *= $$PWD/lib/GUI/
+INCLUDEPATH *= $$PWD/lib/TestApp/
 INCLUDEPATH *= $$PWD/lib/
 
 FORMS += \

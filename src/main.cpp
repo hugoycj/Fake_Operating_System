@@ -1,14 +1,14 @@
-#include "lib/mainwindow.h"
+#include "mainwindow.h"
 #include "ProcessesList.h"
 #include <QApplication>
 #include <iostream>
 #include <thread>
 #include <unistd.h>
 #include <ctime>
-#include "lib/mapper.h"
-#include "lib/allocator.h"
-#include "lib/calculator.h"
-#include "test.cpp"
+#include "mapper.h"
+#include "allocator.h"
+#include "calculator.h"
+#include "src/TestApp/test.cpp"
 #include "Process.h"
 
 using namespace std;

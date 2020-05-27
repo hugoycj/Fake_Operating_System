@@ -1,6 +1,6 @@
-#include "lib/mainwindow.h"
-#include "lib/TextEditor.h"
-#include "lib/MappingDisplayer.h"
+#include "mainwindow.h"
+#include "TextEditor.h"
+#include "MappingDisplayer.h"
 #include "ui_mainwindow.h"
 #include <QTableWidget>
 #include <QHeaderView>

@@ -8,8 +8,8 @@
 #include <QHeaderView>
 
 #include "ui_mainwindow.h"
-#include "lib/MappingDisplayer.h"
-#include "lib/mapper.h"
+#include "MappingDisplayer.h"
+#include "mapper.h"
 
 using namespace std;
 

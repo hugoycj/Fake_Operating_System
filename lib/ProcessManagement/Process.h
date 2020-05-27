@@ -1,7 +1,7 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 #include <string>
-#include <lib/calculator.h>
+#include <calculator.h>
 #include <vector>
 class Process
 {

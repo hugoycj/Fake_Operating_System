@@ -1,6 +1,6 @@
 #include <vector>
 #include <random>
-#include <lib/calculator.h>
+#include <calculator.h>
 #include <assert.h>
 #include <Process.h>
 #include <ProcessControlBlock.h>
