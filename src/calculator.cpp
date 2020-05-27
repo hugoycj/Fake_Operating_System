@@ -26,22 +26,27 @@ double * calculate(vector<double> data_vec_1, vector<double> data_vec_2, string 
     FSB_allocator allocator = * allocator_ptr;
 
     if (type == "mtx_mult") {
-        size_t vec_size = sizeof(vector<double>) + 8*(data_vec_1.size());
+//        size_t vec_size = sizeof(vector<double>) + 8*(data_vec_1.size());
 
         // alloc memory to store data and result
-        vector<double> * data1_ptr = (vector<double> *) allocator.alloc(vec_size);
-        vector<double> * data2_ptr = (vector<double> *) allocator.alloc(vec_size);
-        double * res_ptr = (double *) allocator.alloc(8);
+//        vector<double> * data1_ptr = (vector<double> *) allocator.alloc(vec_size);
+//        vector<double> * data2_ptr = (vector<double> *) allocator.alloc(vec_size);
+        double * res_ptr = (double *) allocator.alloc(sizeof(double));
 
-        // put data into allocated memory
-        *data1_ptr = data_vec_1;
-        *data2_ptr = data_vec_2;
+//        vector<double> * data1_ptr = (vector<double> *) malloc(vec_size);
+//        vector<double> * data2_ptr = (vector<double> *) malloc(vec_size);
+//        double * res_ptr = (double *) malloc(sizeof(double));
 
-        // calculate the result and store the value
-        *res_ptr = dot_mult(*data1_ptr, *data2_ptr);
+//        // put data into allocated memory
+//        *data1_ptr = data_vec_1;
+//        *data2_ptr = data_vec_2;
 
-        allocator.dealloc(data1_ptr, vec_size);
-        allocator.dealloc(data2_ptr, vec_size);
+//        // calculate the result and store the value
+//        *res_ptr = dot_mult(*data1_ptr, *data2_ptr);
+        *res_ptr = dot_mult(data_vec_1, data_vec_2);
+
+//        allocator.dealloc(data1_ptr, vec_size);
+//        allocator.dealloc(data2_ptr, vec_size);
 
         cout << "result: " << *res_ptr << endl;
         cout << "" << endl;

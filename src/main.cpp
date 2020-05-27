@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     /* Process Management Test Part*/
     ProcessesList pl;
     std::cout << "Running" << std::endl;
-//    test(1, &pl);
+    test(1, &pl);
     test(1, &pl);
     test(2, &pl);
     test(2, &pl);
@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
     t1.join();
     dpl.join();
     major.join();
+//    calculation_memory_test();
     return 0;
 };
 
@@ -96,3 +97,15 @@ void display_pl(ProcessesList *pl)
         }
     }
 };
+
+void calculation_memory_test() {
+    for (int i = 0; i < 10; i++) {
+        cout << "**********************: " << i << endl;
+        vector<double> A = {1, 2, 1};
+        vector<double> B = {1, 2, 2};
+        calculate(A,B,"mtx_mult");
+//        static Process p1(A, B, "mtx_mult");
+//        p1.run_process();
+    };
+};
+
