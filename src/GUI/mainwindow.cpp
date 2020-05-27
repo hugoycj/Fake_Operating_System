@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "TextEditor.h"
 #include "MappingDisplayer.h"
+#include "TestApp.h"
 #include "ui_mainwindow.h"
 #include <QTableWidget>
 #include <QHeaderView>
@@ -25,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->TextbookButton, &QPushButton::clicked,this, &MainWindow::clickTextbook);
     ui->TextbookLabel->setStyleSheet("color:white;");
 
-    /// Set textbook icon
+    /// Set file explorer icon
     QIcon FileIcon;
     FileIcon.addFile(tr(":/image/icon/FileEplorer.ico"));
     ui->FileButton->setIcon(FileIcon);
@@ -41,6 +42,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->DisplayerButton, &QPushButton::clicked,this, &MainWindow::clickMemory);
     ui->DisplayerLabel->setStyleSheet("color:white;");
 
+    /// Set TestApp icon
+    QIcon TestIcon;
+    TestIcon.addFile(tr(":/image/icon/MemoryDisplayer.ico"));
+    ui->TestAppButton->setIcon(TestIcon);
+    ui->TestAppButton->setIconSize(QSize(50,50));
+    connect(ui->TestAppButton, &QPushButton::clicked,this, &MainWindow::clickTestApp);
+    ui->TestAppLabel->setStyleSheet("color:white;");
+
 }
 
 MainWindow::~MainWindow()
@@ -55,7 +64,15 @@ void MainWindow::clickTextbook()
     TextEditor *t = new TextEditor(this);
     t->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
     t->show();
-//    long * s;
+}
+
+void MainWindow::clickTestApp()
+{
+    std::cout << "Clicked TestApp" << std::endl;
+    Qt::WindowFlags m_flags = windowFlags();
+    TestApp *t = new TestApp(this);
+    t->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
+    t->show();
 }
 
 void MainWindow::clickFile()

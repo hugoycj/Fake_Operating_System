@@ -23,5 +23,6 @@ private:
     void clickTextbook();
     void clickFile();
     void clickMemory();
+    void clickTestApp();
 };
 #endif // MAINWINDOW_H

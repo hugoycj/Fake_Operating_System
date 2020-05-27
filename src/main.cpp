@@ -23,9 +23,7 @@ int main(int argc, char *argv[]) {
     /* Desktop GUI Part*/
     QApplication a(argc, argv);
     MainWindow w;
-//    TestApp t;
     w.setWindowTitle("Fake Operating System");
-//    t.show();
     w.show();
     return a.exec();
 
