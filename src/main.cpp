@@ -10,6 +10,7 @@
 #include "calculator.h"
 #include "src/TestApp/test.cpp"
 #include "Process.h"
+#include "TestApp.h"
 
 using namespace std;
 void calculation_memory_test();
@@ -20,28 +21,30 @@ void display_pl(ProcessesList *pl);
 int main(int argc, char *argv[]) {
 
     /* Desktop GUI Part*/
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.setWindowTitle("Fake Operating System");
-
-//    w.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    MainWindow w;
+//    TestApp t;
+    w.setWindowTitle("Fake Operating System");
+//    t.show();
+    w.show();
+    return a.exec();
 
     /* Process Management Test Part*/
-    ProcessesList pl;
-    std::cout << "Running" << std::endl;
-    test(1, &pl);
-    test(1, &pl);
-    test(2, &pl);
-    test(2, &pl);
-    test(2, &pl);
-    test(2, &pl);
-    thread major(run, &pl);
-    thread t1(testAPP, &pl);
-    thread dpl(display_pl, &pl);
-    t1.join();
-    dpl.join();
-    major.join();
+//    ProcessesList pl;
+//    std::cout << "Running" << std::endl;
+//    test(1, &pl);
+//    test(1, &pl);
+//    test(2, &pl);
+//    test(2, &pl);
+//    test(2, &pl);
+//    test(2, &pl);
+//    thread major(run, &pl);
+//    thread t1(testAPP, &pl);
+//    thread dpl(display_pl, &pl);
+//    t1.join();
+//    dpl.join();
+//    major.join();
+
 //    calculation_memory_test();
     return 0;
 };

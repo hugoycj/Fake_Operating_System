@@ -12,5 +12,8 @@
         <file>tool/print.ico</file>
         <file>tool/open.ico</file>
         <file>tool/new.ico</file>
+        <file>address/address.txt</file>
+        <file>address/address_2.txt</file>
+        <file>address/duplicated_address.txt</file>
     </qresource>
 </RCC>
