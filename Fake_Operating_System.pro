@@ -67,7 +67,7 @@ BAD_CHARS ~= s|[a-zA-Z0-9_ ().\/:;-]+|
 # (student's source code can be put into project root, or src/ subfolder)
 SOURCES *= $$files($$PWD/src/*.cpp, true) \
 
-HEADERS *= $$files($$PWD/lib/ProcessManagement/*.h, true) \
+HEADERS *= $$files($$PWD/lib/ProcessManagement/*.h, true)
 HEADERS *= $$files($$PWD/lib/MemoryManagement/*.h, true)
 HEADERS *= $$files($$PWD/lib/FileSystem/*.h, true)
 HEADERS *= $$files($$PWD/lib/GUI/*.h, true)

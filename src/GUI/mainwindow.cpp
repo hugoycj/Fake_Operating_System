@@ -8,7 +8,7 @@
 #include <QHeaderView>
 #include <QIcon>
 #include <iostream>
-
+#include "gobalPL.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

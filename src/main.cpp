@@ -11,6 +11,7 @@
 #include "test.h"
 #include "Process.h"
 #include "TestApp.h"
+#include "gobalPL.h"
 
 using namespace std;
 void calculation_memory_test();
@@ -28,7 +29,6 @@ int main(int argc, char *argv[]) {
     return a.exec();
 
     /* Process Management Test Part*/
-//    ProcessesList pl;
 //    std::cout << "Running" << std::endl;
 //    test(1, &pl);
 //    test(1, &pl);
