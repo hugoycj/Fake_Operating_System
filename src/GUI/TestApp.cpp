@@ -2,7 +2,8 @@
 #include "ui_testapp.h"
 #include <QDebug>
 #include <iostream>
-#include "src/TestApp/test.cpp"
+#include "test.h"
+
 
 TestApp::TestApp(QWidget *parent) :
     QMainWindow(parent),
@@ -17,11 +18,11 @@ TestApp::TestApp(QWidget *parent) :
 void TestApp::clickTestOne()
 {
     std::cout << "Clicked Test One" << std::endl;
-    test(1);
+//    test(1);
 }
 
 void TestApp::clickTestTwo()
 {
     std::cout << "Clicked Test Two" << std::endl;
-    test(2);
+//    test(2);
 }

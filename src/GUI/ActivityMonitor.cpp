@@ -1,6 +1,7 @@
 #include "activitymonitor.h"
 #include "ui_activitymonitor.h"
 #include <iostream>
+#include "gobalPL.h"
 
 activitymonitor::activitymonitor(QWidget *parent) :
     QMainWindow(parent),
@@ -27,19 +28,40 @@ activitymonitor::~activitymonitor()
 void activitymonitor::onTimeOut()
 {
     static int value = 0;
-    static int count = 0;
 
-    ui->MemBar->setValue(value++);
+    global_pl.display();
+    if (!global_pl.isEmpty())
+    {
+        global_pl.output();
+        cout << "runed a process" << endl;
+    }
 
-    QTableWidgetItem *tlb_idx_entry;
-    tlb_idx_entry = new QTableWidgetItem;
-    QString tlb_idx = QString("%1").arg(count);
-    tlb_idx_entry->setText(tlb_idx);
+    int memory_size = 0;
+    int total_number_of_process = global_pl.Process_List.size();
+    for (int i = 0; i < total_number_of_process; i++)
+    {
+        ProcessControlBlock *temp_pcb = &global_pl.Process_List[i];
+        memory_size += temp_pcb->process_link->size;
 
-    ui->ACTable->setItem(count, 2, tlb_idx_entry);
+        QString tbl_id = QString("%1").arg(temp_pcb->process_id);
+        QString tbl_pri = QString("%1").arg(temp_pcb->process_priority);
+        QString tbl_name = QString::fromStdString(temp_pcb->process_name);
 
-    count++;
+        QTableWidgetItem *tbl_id_entry = new QTableWidgetItem;
+        QTableWidgetItem *tbl_pri_entry = new QTableWidgetItem;
+        QTableWidgetItem *tbl_name_entry = new QTableWidgetItem;
+        tbl_id_entry->setText(tbl_id);
+        tbl_pri_entry->setText(tbl_pri);
+        tbl_name_entry->setText(tbl_name);
+
+        ui->ACTable->setItem(i, 0, tbl_id_entry);
+        ui->ACTable->setItem(i, 1, tbl_pri_entry);
+        ui->ACTable->setItem(i, 2, tbl_name_entry);
+
+    }
+
     ui->ACTable->viewport()->update();
+    ui->MemBar->setValue(memory_size);
 
     if(value > 100) {
         tim->stop();

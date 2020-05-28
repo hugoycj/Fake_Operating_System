@@ -46,42 +46,77 @@
       <widget class="QTableWidget" name="ACTable">
        <row>
         <property name="text">
-         <string>New Row</string>
+         <string/>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>New Row</string>
+         <string/>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>New Row</string>
+         <string/>
         </property>
        </row>
        <row>
         <property name="text">
-         <string>New Row</string>
+         <string/>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string/>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string/>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string/>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string/>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string/>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string/>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string/>
+        </property>
+       </row>
+       <row>
+        <property name="text">
+         <string/>
         </property>
        </row>
        <column>
         <property name="text">
-         <string>New Column</string>
+         <string>ID</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>New Column</string>
+         <string>Priority</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string>New Column</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>New Column</string>
+         <string>Name</string>
         </property>
        </column>
       </widget>

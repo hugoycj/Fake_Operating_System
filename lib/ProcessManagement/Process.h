@@ -6,11 +6,13 @@
 class Process
 {
 public:
-    Process(vector<double> in_A, vector<double> in_B, string type)
+    int size;
+    Process(vector<double> in_A, vector<double> in_B, string type, int in_size)
     {
         A = in_A;
         B = in_B;
         calculate_type = type;
+        size = in_size;
     };
 
     void run_process()

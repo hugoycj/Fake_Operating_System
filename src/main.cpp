@@ -8,7 +8,6 @@
 #include "mapper.h"
 #include "allocator.h"
 #include "calculator.h"
-#include "test.h"
 #include "Process.h"
 #include "TestApp.h"
 
@@ -19,7 +18,6 @@ void run(ProcessesList *pl);
 void display_pl(ProcessesList *pl);
 
 int main(int argc, char *argv[]) {
-
     /* Desktop GUI Part*/
     QApplication a(argc, argv);
     MainWindow w;

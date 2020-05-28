@@ -25,8 +25,8 @@ public:
     int size_of_tuple(ProcessControlBlock Process_List[100]);
     void show_single_pcb(ProcessControlBlock &pr);
     int get_cur_id();
-private:
     std::vector<ProcessControlBlock> Process_List;
+private:
     int size;
     int current_id;
     time_t start_time;

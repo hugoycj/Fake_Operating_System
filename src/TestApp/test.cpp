@@ -1,5 +1,4 @@
 #include "test.h"
-#include "gobalPL.h"
 
 /*
  * @brief Used to test memory allocator and process management
@@ -24,7 +23,7 @@ void test(int mode)
         tempA = single_vector_generator(1);
         tempB = single_vector_generator(1);
         size = 1;
-        static Process p0(tempA, tempB, type);
+        static Process p0(tempA, tempB, type, size);
         PCB pcb2(cur_id, type, size, &p0);
         global_pl.push(pcb2);
     }
@@ -37,7 +36,7 @@ void test(int mode)
         tempB = single_vector_generator(size);
         size = sizeof(tempA);
 
-        static Process p1(tempA, tempB, type);
+        static Process p1(tempA, tempB, type, size);
         PCB pcb1(cur_id, type, size, &p1);
         global_pl.push(pcb1);
 

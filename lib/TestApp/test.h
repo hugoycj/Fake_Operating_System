@@ -8,6 +8,7 @@
 #include <Process.h>
 #include <ProcessControlBlock.h>
 #include <ProcessesList.h>
+#include "gobalPL.h"
 
 using namespace std;
 typedef ProcessControlBlock PCB;
