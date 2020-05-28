@@ -1,28 +1,9 @@
 #include "TestApp.h"
-#include "ui_TestApp.h"
-#include <QDebug>
-#include <iostream>
-#include "src/TestApp/test.cpp"
 
-TestApp::TestApp(QWidget *parent, ProcessesList *pl) :
-    QMainWindow(parent),
-    ui(new Ui::TestApp)
+TestApp::TestApp(QWidget *parent) :
+    QMainWindow(parent)
 {
-    setWindowTitle(tr("Test App"));
-    ui->setupUi(this);
-    ProcessesList *pl_link = pl;
-    connect(ui->testOne, &QPushButton::clicked,this, &TestApp::clickTestOne);
-    connect(ui->testTwo, &QPushButton::clicked,this, &TestApp::clickTestTwo);
-}
+    setWindowTitle(tr("Main Window"));
 
-void TestApp::clickTestOne()
-{
-    std::cout << "Clicked Test One" << std::endl;
-    test(1, pl_link);
-}
-
-void TestApp::clickTestTwo()
-{
-    std::cout << "Clicked Test Two" << std::endl;
-    test(2, pl_link);
+    statusBar() ;
 }
