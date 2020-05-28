@@ -65,24 +65,26 @@ BAD_CHARS ~= s|[a-zA-Z0-9_ ().\/:;-]+|
 
 # include various source .cpp files and header .h files in the build process
 # (student's source code can be put into project root, or src/ subfolder)
-SOURCES *= $$files($$PWD/src/*.cpp, true)
+SOURCES *= $$files($$PWD/src/*.cpp, true) \
 
 HEADERS *= $$files($$PWD/lib/ProcessManagement/*.h, true) \
-    lib/TestApp/test.h
-HEADERS *= $$files($$PWD/lib/GUI/*.h, true)
 HEADERS *= $$files($$PWD/lib/MemoryManagement/*.h, true)
+HEADERS *= $$files($$PWD/lib/FileSystem/*.h, true)
+HEADERS *= $$files($$PWD/lib/GUI/*.h, true)
 HEADERS *= $$files($$PWD/lib/TestApp/*.h, true)
 HEADERS *= $$files($$PWD/lib/*.h, true)
 
 # directories examined by Qt Creator when student writes an #include statement
 INCLUDEPATH *= $$PWD/lib/ProcessManagement/
 INCLUDEPATH *= $$PWD/lib/MemoryManagement/
+INCLUDEPATH *= $$PWD/lib/FileSystem/
 INCLUDEPATH *= $$PWD/lib/GUI/
 INCLUDEPATH *= $$PWD/lib/TestApp/
 INCLUDEPATH *= $$PWD/lib/
 
 FORMS += \
-    TestApp.ui \
+    activitymonitor.ui \
+    fileexplorer.ui \
     mainwindow.ui
 
 RESOURCES += \
@@ -92,8 +94,3 @@ RESOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-DISTFILES += \
-   src/address.txt \
-   src/address_2.txt \
-   src/duplicated_address.txt

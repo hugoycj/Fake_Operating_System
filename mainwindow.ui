@@ -143,7 +143,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Memory Displayer</string>
+     <string>Mapping Displayer</string>
     </property>
     <property name="scaledContents">
      <bool>false</bool>
@@ -179,6 +179,44 @@
     </property>
     <property name="text">
      <string>TestApp</string>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ACButton">
+    <property name="geometry">
+     <rect>
+      <x>790</x>
+      <y>20</y>
+      <width>63</width>
+      <height>63</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ACLabel">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>80</y>
+      <width>90</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>AC</string>
     </property>
     <property name="scaledContents">
      <bool>false</bool>

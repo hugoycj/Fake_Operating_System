@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QMouseEvent>
 #include <QtGui>
-#include "ProcessesList.h"
+#include "fileexplorer.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,10 +21,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    ProcessesList pl;
     void clickTextbook();
     void clickFile();
     void clickMemory();
     void clickTestApp();
+    void clickAC();
 };
 #endif // MAINWINDOW_H

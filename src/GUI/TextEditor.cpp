@@ -1,6 +1,6 @@
 #include "TextEditor.h"
 #include "ui_mainwindow.h"
-#include <QIcon>   //注意包含头文件
+#include <QIcon>
 
 TextEditor::TextEditor(QWidget *parent)
     : QMainWindow(parent), statusLabel(this)

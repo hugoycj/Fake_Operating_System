@@ -37,9 +37,9 @@ struct block {
    block *link;
 
    // malloc a block of memory and assign to data_ptr
-   void alloc_data_mem(size_t size) {
+    void alloc_data_mem(size_t size) {
         data_ptr = std::malloc(size);
-   };
+    };
 };
 
 
@@ -53,10 +53,10 @@ class FSB_allocator {
 public:
 
    // constructor
-   FSB_allocator();
+    FSB_allocator();
 
    // destructor
-   ~FSB_allocator();
+    ~FSB_allocator();
 
    // Take in layout required size,
    // Return ptr of first byte of the allocated memory
@@ -65,56 +65,54 @@ public:
 
    // Take in pointer given by malloc and delete it
    // Add one block back to the corresponding free-list
-   template <typename ValueType>
-   void dealloc(ValueType * ptr, size_t size) {
-       std::cout << "Start dealloc" << std::endl;
+    template <typename ValueType>
+    void dealloc(ValueType * ptr, size_t size) {
+        std::cout << "Start dealloc" << std::endl;
 
-       // get the proper size that should be deallocated
-       size_t dealloc_size = size;
-//       std::cout<<"dealloc_size: "<<dealloc_size<<std::endl;
-       size_t block_header_idx = memory_alignment(dealloc_size);
-//       std::cout<<"block_header_idx: "<<block_header_idx<<std::endl;
+        // get the proper size that should be deallocated
+        size_t dealloc_size = size;
+        size_t block_header_idx = memory_alignment(dealloc_size);
 
-       // Add one block back to the corresponding free-list
-       block * new_free_block = new block;
-       new_free_block->data_ptr = nullptr;
-       block * temp = block_map[block_header_idx];
+        // Add one block back to the corresponding free-list
+        block * new_free_block = new block;
+        new_free_block->data_ptr = nullptr;
+        block * temp = block_map[block_header_idx];
 
-       // insert the new block at the beginning
-       new_free_block->link = temp->link;
-       (block_map[block_header_idx])->link = new_free_block;
+        // insert the new block at the beginning
+        new_free_block->link = temp->link;
+        (block_map[block_header_idx])->link = new_free_block;
 
-       // set the deallocated pointer as nullptr
-       free(ptr);
-       ptr = nullptr;
-       display();
-       std::cout << "" << std::endl;
-   };
+        // set the deallocated pointer as nullptr
+        free(ptr);
+        ptr = nullptr;
+        display();
+        std::cout << "" << std::endl;
+    };
 
    // adjust the size of allocated memory region and return a new pointer
    void * realloc(void * ptr, size_t size);
 
    // check the number of blocks in corresponding free-list
-   int loop_test(int header_idx);
+    int loop_test(int header_idx);
 
-   block* get_block_map(int idx);
+    block* get_block_map(int idx);
 
-private:
-   std::vector<size_t> BLOCK_SIZES = {8, 16, 32, 64, 128};
-   std::vector<block*> block_map; // vector of different block pointer, each points to a free-list
+    private:
+    std::vector<size_t> BLOCK_SIZES = {8, 16, 32, 64, 128};
+    std::vector<block*> block_map; // vector of different block pointer, each points to a free-list
 
-   // Round the required size to the nearest block size,
-   // return the index of that free-block list (a block pointer) in block_map
-   size_t memory_alignment (size_t required_mem_size);
+    // Round the required size to the nearest block size,
+    // return the index of that free-block list (a block pointer) in block_map
+    size_t memory_alignment (size_t required_mem_size);
 
-   // expand block_map if over-sized meomory size is required
-   void expand_mem(size_t mem_size);
+    // expand block_map if over-sized meomory size is required
+    void expand_mem(size_t mem_size);
 
-   // calculate the proper size for given mem_size
-   size_t calculate_mem_size(size_t mem_size);
+    // calculate the proper size for given mem_size
+    size_t calculate_mem_size(size_t mem_size);
 
-   // display block num info
-   void display();
+    // display block num info
+    void display();
 
 };
 

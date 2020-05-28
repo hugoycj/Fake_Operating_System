@@ -86,8 +86,7 @@ void VM::zero_extend(string &target, unsigned int len) {
 
 // constructor
 VM::VM() {
-    srand(0);
-    for (int i = 0; i < 64; i ++) {
+    for (int i = 0; i < (this->PTSize); i ++) {
         LV1_PT[i] = (rand() % (63-0+1)) + 0;
     };
 };
@@ -101,44 +100,34 @@ VM::~VM() {
 
 void VM::mapper_test() {
 
-    ifstream infile;
-//    string filename = "address_2.txt";
-//    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/address.txt";
-    string filename = ":/address/address_2.txt";
-//    string filename = "/Users/alanzyt/Desktop/Fake_Operating_System/src/duplicated_address.txt";
+    string addr = generate_VA();
+    cout<<"virtual addr: "<<addr<<endl;
+    string phy_addr;
 
-    infile.open(filename.c_str());
+    // 1.page_no1 is the position of target entry in 1st-level PT
+    // 2.page_no2 is the position of target entry in 2nd-level PT
+    // 3.page2Index is used to find the target 2nd-level PT in PT sets
+    // 4.fpage is the final result of the frame
+    int page_no1, page_no2, page2Index;
+    page_no1 = binToInt(addr.substr(0,10));
+    page_no2 = binToInt(addr.substr(10,10));
+    page2Index = LV1_PT[page_no1];
 
-    string addr;
-    while(getline(infile, addr)) {
-        cout<<"virtual addr: "<<addr<<endl;
-        string phy_addr;
+    // call a initialize function to initialize the specific 2nd level PT
+    random_init(page2Index);
 
-        // 1.page_no1 is the position of target entry in 1st-level PT
-        // 2.page_no2 is the position of target entry in 2nd-level PT
-        // 3.page2Index is used to find the target 2nd-level PT in PT sets
-        // 4.fpage is the final result of the frame
-        int page_no1, page_no2, page2Index;
-        page_no1 = binToInt(addr.substr(0,10));
-        page_no2 = binToInt(addr.substr(10,10));
-        page2Index = LV1_PT[page_no1];
+    // calling tlbSearch to find out the frame page value
+    fpage = tlbSearch(page2Index, page_no2);
 
-        // call a initialize function to initialize the specific 2nd level PT
-        random_init(page2Index);
+    // get the offset from vir_addr
+    string offset_str = addr.substr(20,12);
 
-        // calling tlbSearch to find out the frame page value
-        fpage = tlbSearch(page2Index, page_no2);
+    // combine the frame and offset to ge the physical address
+    phy_addr = decToBinStr(fpage);
+    zero_extend(phy_addr,16);
+    phy_addr += offset_str;
 
-        // get the offset from vir_addr
-        string offset_str = addr.substr(20,12);
-
-        // combine the frame and offset to ge the physical address
-        phy_addr = decToBinStr(fpage);
-        zero_extend(phy_addr,16);
-        phy_addr += offset_str;
-
-        cout<<"physical address: "<<phy_addr<<endl;
-    };
+    cout<<"physical address: "<<phy_addr<<endl;
 };
 
 
@@ -160,7 +149,7 @@ int VM::tlbSearch(int index, int target) {
     // TLB Hit -> get frame value directly
     for (int i = 0; i < (TLBSize-1); i++) {
         if (TLBTable[index][i][0] == target) {
-            cout << "! TLB hit" << endl;
+            cout << "TLB hit" << endl;
             found = 1;
             frame = TLBTable[index][i][1];
         };
@@ -168,7 +157,7 @@ int VM::tlbSearch(int index, int target) {
 
     // TLB Miss -> Search PageTable and Update TLB
     if (found == -1) {
-        cout << "! TLB miss" << endl;
+        cout << "TLB miss" << endl;
         map< int, vector<int> >::iterator it;
         for (it = LV2_PT_SET.begin(); it!= LV2_PT_SET.end(); it++) {
             int id = it->first;
@@ -180,11 +169,9 @@ int VM::tlbSearch(int index, int target) {
         updateTLB(index, target, frame);
         cout<<index<<"-th TLB"<<endl;
         cout<<"tlb idx: "<<tlbIndexSet[index]<<endl;
-//        cout << "check page in mapper: " << TLBTable[index][tlbIndex][0] << endl;
-//        cout << "check frame in mapper: " << TLBTable[index][tlbIndex][1] << endl;
     }
 
-    cout<<"tlbSearch OK"<<endl;
+    cout<<"Finish tlbSearch."<<endl;
     return frame;
 }
 
@@ -196,9 +183,6 @@ void VM::updateTLB(int index, int page, int frame) {
 
     TLBTable[index][(tlbIndexSet[index])][0] = page;
     TLBTable[index][(tlbIndexSet[index])][1] = frame;
-    cout<<"up"<<endl;
-//    cout << "check page in mapper: " << TLBTable[index][tlbIndex][0] << endl;
-//    cout << "check frame in mapper: " << TLBTable[index][tlbIndex][1] << endl;
 
     (tlbIndexSet[index])++;
 };
@@ -210,7 +194,7 @@ void VM::random_init(int id) {
     vector<int> pt;
 
     // initialize pt
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < (this->PTSize); i++) {
         // generate random pte
         int page_no = (rand() % (2047-0+1)) + 0; // 0~2047 pysical page number
         pt.push_back(page_no);
@@ -223,7 +207,6 @@ void VM::random_init(int id) {
     LV2_PT_SET[id] = pt;
     cout<<"init ok"<<endl;
 };
-
 
 
 // get value in lv1 pt with idx
@@ -258,11 +241,6 @@ vector<int> VM::lv2_pt_get (int index) {
 // get TLB idx-th table
 vector<int> VM::tlb_get(int index, int row_idx) {
     vector<int> buf;
-
-//    cout << "tlb get, tlb idx " << index << endl;
-//    cout << "tlb get, row idx " << row_idx << endl;
-    cout << "check page in mapper: " << TLBTable[index][row_idx][0] << endl;
-    cout << "check frame in mapper: " << TLBTable[index][row_idx][1] << endl;
 
     buf.push_back(TLBTable[index][row_idx][0]);
     buf.push_back(TLBTable[index][row_idx][1]);
@@ -315,3 +293,24 @@ string VM::intToStr(int i) {
 
     return strTemp;
 };
+
+
+string VM::generate_VA() {
+
+    VM mid_mapper;
+    int LV1_page_no = (rand() % (63-0+1)) + 0;
+    int LV2_page_no = (rand() % (63-0+1)) + 0;
+    int b = this->page_size;
+    int offset = (rand() % (b-0+1)) + 0;
+
+    string LV1_page_no_str = mid_mapper.decToBinStr(LV1_page_no);
+    string LV2_page_no_str = mid_mapper.decToBinStr(LV2_page_no);
+    string offset_str = mid_mapper.decToBinStr(offset);
+
+    mid_mapper.zero_extend(LV1_page_no_str,10);
+    mid_mapper.zero_extend(LV2_page_no_str,10);
+    mid_mapper.zero_extend(offset_str,12);
+
+    string result = LV1_page_no_str + LV2_page_no_str + offset_str;
+    return result;
+}

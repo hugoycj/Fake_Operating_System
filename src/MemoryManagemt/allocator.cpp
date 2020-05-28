@@ -69,7 +69,7 @@ void FSB_allocator::expand_mem(size_t mem_size) {
         current->link = next;
         current = next;
     };
-    cout<<"expand done!!"<<endl;
+    cout<<"Finish one memory expansion."<<endl;
     display();
     cout << "" << endl;
 };
@@ -160,7 +160,8 @@ void * FSB_allocator::alloc(size_t mem_size) {
     cout << "required memory size: " << mem_size << endl;
     cout << "given block size: " << BLOCK_SIZES[block_header_idx] << endl;
     display();
-    cout << "" << endl;
+    cout << "Finish one memory allocation." << endl;
+    cout << endl;
 
     return temp->data_ptr;
 };
@@ -182,7 +183,6 @@ int FSB_allocator::loop_test(int header_idx) {
         i++;
         start = start->link;
     };
-//    cout << BLOCK_SIZES[header_idx] << "-bytes list has : " << i << " blocks" << endl;
     return i;
 };
 
@@ -198,7 +198,6 @@ void FSB_allocator::display() {
         cout<<i+1<<"-th one:"<<endl;
         cout << BLOCK_SIZES[idx] << "-bytes list has : " << i << " blocks" << endl;
     }
-    cout<<"for loop done"<<endl;
 };
 
 

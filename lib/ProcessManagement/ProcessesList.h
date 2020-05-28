@@ -1,6 +1,6 @@
 /**
  * @file ProcessesList.h
- * @brief 包含所有process的PCB，并可以输出响应比最高的PCB   
+ * @brief PCB that contains all process，can respond to PCB with the highest priority
  * 
  * @author Shiyi Zheng
  */

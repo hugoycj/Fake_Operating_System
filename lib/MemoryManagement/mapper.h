@@ -77,12 +77,10 @@ private:
     // PM size: 8 MB
     static const int TLBSize = 8;
     const int PTSize = 64;
-    const int FTSize = 64;
     const int page_size = 4*1024; // 4*1024 byte /4 KB each page, total 2048 pages
 
     int TLBTable [64][8][2] = {{{0}}};
     int LV1_PT [64];
-    int FrameTable [64];
 
     // LV2_PT_SET is a vector to store the initialized 2nd level PTs
     // PT should have a ID since it is out of order in a vector during simulation
@@ -94,7 +92,7 @@ private:
     int lv2_pt_status [64] = {0};
 
     // fpage
-    int vpage, fpage, offset;
+    int fpage;
 
     int tlbIndexSet [64] = {0};
 
@@ -140,4 +138,7 @@ public:
 
     // get TLB table
     vector<int> tlb_get(int index, int row_idx);
+
+    // generate random virtual address string, following specific rule
+    string generate_VA();
 };
