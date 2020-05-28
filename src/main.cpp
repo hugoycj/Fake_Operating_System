@@ -8,7 +8,7 @@
 #include "mapper.h"
 #include "allocator.h"
 #include "calculator.h"
-#include "src/TestApp/test.cpp"
+#include "test.h"
 #include "Process.h"
 #include "TestApp.h"
 

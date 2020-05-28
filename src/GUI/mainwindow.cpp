@@ -70,7 +70,7 @@ void MainWindow::clickTestApp()
 {
     std::cout << "Clicked TestApp" << std::endl;
     Qt::WindowFlags m_flags = windowFlags();
-    TestApp *t = new TestApp(this);
+    TestApp *t = new TestApp(this, &this->pl);
     t->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
     t->show();
 }
