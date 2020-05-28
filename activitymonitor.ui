@@ -27,16 +27,54 @@
      <item>
       <layout class="QHBoxLayout" name="UsedMemory">
        <item>
-        <widget class="QLabel" name="UsedMemory_2">
+        <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Used Memory</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QProgressBar" name="MemBar">
+        <widget class="QProgressBar" name="progressBar_2">
          <property name="value">
           <number>24</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="PropertyLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <item>
+        <widget class="QLabel" name="ProgressName">
+         <property name="text">
+          <string>Progress Name</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="Status">
+         <property name="text">
+          <string>Status</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="Priority">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Priority</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="PID">
+         <property name="text">
+          <string>PID</string>
          </property>
         </widget>
        </item>

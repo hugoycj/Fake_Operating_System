@@ -1,5 +1,3 @@
-#ifndef MAPPER_H
-#define MAPPER_H
 // impl of paging mapper API
 #include <string>
 #include <iostream>
@@ -144,5 +142,3 @@ public:
     // generate random virtual address string, following specific rule
     string generate_VA();
 };
-
-#endif

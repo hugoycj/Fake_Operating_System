@@ -9,7 +9,6 @@
 #include <QIcon>
 #include <iostream>
 
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -107,12 +106,8 @@ void MainWindow::clickAC()
     Qt::WindowFlags m_flags = windowFlags();
     activitymonitor *ac = new activitymonitor(this);
     ac->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
-
-    QTimer *timer = new QTimer(ac);
-    connect(timer, SIGNAL(timeout()), ac, SLOT(onTimeOut())); // ***就是你所说的响应函数
-    timer->start(1000); // 每隔1sac->update
-
     ac->show();
+
 
     /*
      * test_process_end(process_list);
