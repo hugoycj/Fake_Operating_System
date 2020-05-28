@@ -85,7 +85,8 @@ INCLUDEPATH *= $$PWD/lib/
 FORMS += \
     activitymonitor.ui \
     fileexplorer.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    testapp.ui
 
 RESOURCES += \
     resource/resource.qrc
