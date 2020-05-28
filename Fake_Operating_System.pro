@@ -81,6 +81,7 @@ INCLUDEPATH *= $$PWD/lib/TestApp/
 INCLUDEPATH *= $$PWD/lib/
 
 FORMS += \
+    TestApp.ui \
     mainwindow.ui
 
 RESOURCES += \
