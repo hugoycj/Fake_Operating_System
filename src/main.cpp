@@ -8,7 +8,7 @@
 #include "mapper.h"
 #include "allocator.h"
 #include "calculator.h"
-#include "src/TestApp/test.cpp"
+#include "test.h"
 #include "Process.h"
 #include "TestApp.h"
 
@@ -21,11 +21,11 @@ void display_pl(ProcessesList *pl);
 int main(int argc, char *argv[]) {
 
     /* Desktop GUI Part*/
-//    QApplication a(argc, argv);
-//    MainWindow w;
-//    w.setWindowTitle("Fake Operating System");
-//    w.show();
-//    return a.exec();
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.setWindowTitle("Fake Operating System");
+    w.show();
+    return a.exec();
 
     /* Process Management Test Part*/
 //    ProcessesList pl;
@@ -63,7 +63,7 @@ void testAPP(ProcessesList *pl)
 
 void run(ProcessesList *pl)
 {
-//    int i = 0;
+    int i = 0;
     int lastTime = 0;
 
     while (1)
@@ -85,7 +85,7 @@ void run(ProcessesList *pl)
 
 void display_pl(ProcessesList *pl)
 {
-//    int i = 0;
+    int i = 0;
     int lastTime = 0;
 
     while (1)
