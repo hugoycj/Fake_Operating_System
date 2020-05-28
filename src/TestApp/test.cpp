@@ -1,17 +1,17 @@
 #include "test.h"
-
+#include "gobalPL.h"
 
 /*
  * @brief Used to test memory allocator and process management
  * @param mode
  * One test function is one process, it include: creating process and PCB
  */
-void test(int mode, ProcessesList *pl)
+void test(int mode)
 {
     string type;
     int size;
     int cur_id;
-    cur_id = pl->get_cur_id();
+    cur_id = global_pl.get_cur_id();
     vector<double> tempA, tempB;
 
     srand( (unsigned)time( NULL ) );
@@ -26,7 +26,7 @@ void test(int mode, ProcessesList *pl)
         size = 1;
         static Process p0(tempA, tempB, type);
         PCB pcb2(cur_id, type, size, &p0);
-        pl->push(pcb2);
+        global_pl.push(pcb2);
     }
     /* Mode 2: Matrix multiplication */
     else if (mode == 2)
@@ -39,7 +39,8 @@ void test(int mode, ProcessesList *pl)
 
         static Process p1(tempA, tempB, type);
         PCB pcb1(cur_id, type, size, &p1);
-        pl->push(pcb1);
+        global_pl.push(pcb1);
+
     }
     /* Mode 3: Matrix invert */
 //    else if (mode == 3)
@@ -55,6 +56,7 @@ void test(int mode, ProcessesList *pl)
 //        PCB pcb2(cur_id, type, size);
 //        pl->push(pcb2);
 //    }
+    global_pl.display();
 }
 
 

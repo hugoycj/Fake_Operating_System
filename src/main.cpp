@@ -11,7 +11,6 @@
 #include "test.h"
 #include "Process.h"
 #include "TestApp.h"
-#include "gobalPL.h"
 
 using namespace std;
 void calculation_memory_test();
@@ -44,22 +43,7 @@ int main(int argc, char *argv[]) {
 //    major.join();
 
 //    calculation_memory_test();
-    return 0;
 };
-
-void testAPP(ProcessesList *pl)
-{
-    int mode;
-    while(1)
-    {
-//        cout << "Please input test mode: ";
-        cin >> mode;
-        if (mode == 0)
-            return;
-        else
-            test(mode, pl);
-    }
-}
 
 void run(ProcessesList *pl)
 {

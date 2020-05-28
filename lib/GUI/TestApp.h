@@ -2,7 +2,6 @@
 #define TESTAPP_H
 #include <QMainWindow>
 #include "ProcessesList.h"
-#include "gobalPL.h"
 namespace Ui {
     class TestApp;
 }

@@ -17,6 +17,6 @@ using std::uniform_int_distribution;
 vector<vector<double>> matrix_input(int row, int col);
 vector<double> get_one_col(vector<vector<double>> matrix, int col);
 vector<double> single_vector_generator(int length);
-void test(int mode, ProcessesList *pl);
+void test(int mode);
 
 #endif // TEST_H

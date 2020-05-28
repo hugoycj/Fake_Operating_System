@@ -72,7 +72,6 @@ HEADERS *= $$files($$PWD/lib/MemoryManagement/*.h, true)
 HEADERS *= $$files($$PWD/lib/FileSystem/*.h, true)
 HEADERS *= $$files($$PWD/lib/GUI/*.h, true)
 HEADERS *= $$files($$PWD/lib/TestApp/*.h, true)
-HEADERS *= $$files($$PWD/lib/*.h, true)
 
 # directories examined by Qt Creator when student writes an #include statement
 INCLUDEPATH *= $$PWD/lib/ProcessManagement/
@@ -80,7 +79,6 @@ INCLUDEPATH *= $$PWD/lib/MemoryManagement/
 INCLUDEPATH *= $$PWD/lib/FileSystem/
 INCLUDEPATH *= $$PWD/lib/GUI/
 INCLUDEPATH *= $$PWD/lib/TestApp/
-INCLUDEPATH *= $$PWD/lib/
 
 FORMS += \
     activitymonitor.ui \

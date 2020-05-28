@@ -1,6 +1,7 @@
-#ifndef GOBALPL_H
-#define GOBALPL_H
+#ifndef GLOBALPL_H
+#define GLOBALPL_H
 #include "ProcessesList.h"
 
-extern ProcessesList pl = ProcessesList();
-#endif // GOBALPL_H
+extern ProcessesList global_pl = ProcessesList();
+
+#endif // GLOBALPL_H
