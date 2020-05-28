@@ -189,7 +189,6 @@ int ProcessesList::get_cur_id()
 {
     return current_id;
 }
-
 bool ProcessesList::isEmpty()
 {
     return (size == 0);

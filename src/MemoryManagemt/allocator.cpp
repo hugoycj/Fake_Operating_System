@@ -127,6 +127,7 @@ void * FSB_allocator::alloc(size_t mem_size) {
 
     // calculate the proper size
     size_t best_size = calculate_mem_size(mem_size);
+    used_mem += int(best_size);
 
     // find whether the proper size is in the size vector or not
     vector<size_t>::iterator it = find(BLOCK_SIZES.begin(), BLOCK_SIZES.end(), best_size);
@@ -201,9 +202,9 @@ void FSB_allocator::display() {
 };
 
 
-block* FSB_allocator::get_block_map(int idx) {
-    return block_map[idx];
-}
+int FSB_allocator::get_used_mem() {
+    return used_mem;
+};
 
 
 /* impl for LL_allocator class */
