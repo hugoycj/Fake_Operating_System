@@ -12,12 +12,13 @@
 #include "TestApp.h"
 
 using namespace std;
-void calculation_memory_test();
-void testAPP(ProcessesList *pl);
-void run(ProcessesList *pl);
-void display_pl(ProcessesList *pl);
+void memory_expansion_test();
 
 int main(int argc, char *argv[]) {
+
+    /* termianl testing section for memory allocation with expansion */
+//    memory_expansion_test();
+
     /* Desktop GUI Part*/
     QApplication a(argc, argv);
     MainWindow w;
@@ -25,70 +26,23 @@ int main(int argc, char *argv[]) {
     w.show();
     return a.exec();
 
-    /* Process Management Test Part*/
-//    std::cout << "Running" << std::endl;
-//    test(1, &pl);
-//    test(1, &pl);
-//    test(2, &pl);
-//    test(2, &pl);
-//    test(2, &pl);
-//    test(2, &pl);
-//    thread major(run, &pl);
-//    thread t1(testAPP, &pl);
-//    thread dpl(display_pl, &pl);
-//    t1.join();
-//    dpl.join();
-//    major.join();
-
-//    calculation_memory_test();
 };
 
-void run(ProcessesList *pl)
-{
-    int i = 0;
-    int lastTime = 0;
 
-    while (1)
-    {
-        int now = clock()/(CLOCKS_PER_SEC+1);
-        if (now - lastTime > 0)
-        {
-            pl->display();
-            if (!pl->isEmpty())
-            {
-                pl->output();
-                cout << "runed a process" << endl;
-                sleep(2);
-            }
-            lastTime = now;
+void memory_expansion_test() {
+
+    cout << "***************** Memory expansion test *****************" << endl;
+    // test mtx_inv with memory expansion
+    srand(1);
+    int size = 4;
+    vector<vector<double>> B;
+    for (int x=0; x<size; x++) {
+        vector<double> buf;
+        for (int y=0; y < size; y++) {
+            buf.push_back(double((rand() % (63-0+1)) + 0));
         }
+        B.push_back(buf);
     }
-}
-
-void display_pl(ProcessesList *pl)
-{
-    int i = 0;
-    int lastTime = 0;
-
-    while (1)
-    {
-        int now = clock()/CLOCKS_PER_SEC;
-        if (now - lastTime > 0)
-        {
-            pl->display();
-            lastTime = now;
-        }
-    }
+    mtx_inv(B);
+    cout << "*********************** Finish test ***********************" << endl;
 };
-
-void calculation_memory_test() {
-    for (int i = 0; i < 10; i++) {
-        cout << "**********************: " << i << endl;
-        vector<double> A = {1, 2, 1};
-        vector<double> B = {1, 2, 2};
-        calculate(A,B,"mtx_mult");
-//        static Process p1(A, B, "mtx_mult");
-//        p1.run_process();
-    };
-};
-

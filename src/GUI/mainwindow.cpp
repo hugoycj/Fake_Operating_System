@@ -1,12 +1,13 @@
 #include "mainwindow.h"
 #include "TextEditor.h"
-#include "MappingDisplayer.h"
+#include "mappingdisplayer.h"
 #include "activitymonitor.h"
 #include "TestApp.h"
 #include "ui_mainwindow.h"
 #include <QTableWidget>
 #include <QHeaderView>
 #include <QIcon>
+#include <QCalendarWidget>
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -35,16 +36,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->FileLabel->setStyleSheet("color:white;");
 
     /// Set memory_displayer icon
-    QIcon MemoryIcon;
-    MemoryIcon.addFile(tr(":/image/icon/MemoryDisplayer.ico"));
-    ui->DisplayerButton->setIcon(MemoryIcon);
+    QIcon MDIcon;
+    MDIcon.addFile(tr(":/image/icon/md.ico"));
+    ui->DisplayerButton->setIcon(MDIcon);
     ui->DisplayerButton->setIconSize(QSize(50,50));
-    connect(ui->DisplayerButton, &QPushButton::clicked,this, &MainWindow::clickMemory);
+    connect(ui->DisplayerButton, &QPushButton::clicked,this, &MainWindow::clickMD);
     ui->DisplayerLabel->setStyleSheet("color:white;");
 
     /// Set TestApp icon
     QIcon TestIcon;
-    TestIcon.addFile(tr(":/image/icon/MemoryDisplayer.ico"));
+    TestIcon.addFile(tr(":/image/icon/test.ico"));
     ui->TestAppButton->setIcon(TestIcon);
     ui->TestAppButton->setIconSize(QSize(50,50));
     connect(ui->TestAppButton, &QPushButton::clicked,this, &MainWindow::clickTestApp);
@@ -53,11 +54,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /// Set AC icon
     QIcon ACIcon;
-    ACIcon.addFile(tr(":/image/icon/MemoryDisplayer.ico"));
+    ACIcon.addFile(tr(":/image/icon/ac.ico"));
     ui->ACButton->setIcon(ACIcon);
     ui->ACButton->setIconSize(QSize(50,50));
     connect(ui->ACButton, &QPushButton::clicked,this, &MainWindow::clickAC);
     ui->ACLabel->setStyleSheet("color:white;");
+
+    /// Set Calender icon
+    QIcon CalenderIcon;
+    CalenderIcon.addFile(tr(":/image/icon/ca.ico"));
+    ui->CalenderButton->setIcon(CalenderIcon);
+    ui->CalenderButton->setIconSize(QSize(50,50));
+    connect(ui->CalenderButton, &QPushButton::clicked,this, &MainWindow::clickCalender);
+    ui->CalenderLabel->setStyleSheet("color:white;");
 
 }
 
@@ -93,11 +102,13 @@ void MainWindow::clickFile()
     fe->show();
 }
 
-void MainWindow::clickMemory()
+void MainWindow::clickMD()
 {
-    std::cout << "Clicked Memory Displayer" << std::endl;
-    MappingDisplayer *t = new MappingDisplayer();
-    t->close();
+    std::cout << "Clicked Mapping Displayer" << std::endl;
+    Qt::WindowFlags m_flags = windowFlags();
+    mappingdisplayer *md = new mappingdisplayer(this);
+    md->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
+    md->show();
 }
 
 void MainWindow::clickAC()
@@ -108,40 +119,14 @@ void MainWindow::clickAC()
     ac->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
     ac->show();
 
+}
 
-    /*
-     * test_process_end(process_list);
-     *
-     * int count_test_times = 0;
-     * ProcessesList pl;
-     * while (true) {
-     *      if (count_test_times = 0) {
-     *          //    test(1, &pl);
-                //    test(1, &pl);
-                //    test(2, &pl);
-                //    test(2, &pl);
-                //    test(2, &pl);
-                //    test(2, &pl);
-            } else {
+void MainWindow::clickCalender()
+{
+    std::cout << "Clicked Calender" << std::endl;
+    Qt::WindowFlags m_flags = windowFlags();
+    QCalendarWidget *ca = new QCalendarWidget(this);
+    ca->setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
+    ca->show();
 
-         *      if (test_process_end()) {
-         *          ui->ACTable->clearitem();
-         *      }
-         *
-         *      if (new_process_add_in_flag/input_change) {
-         *          test(input_mode);
-         *          new_p_id_item = ....
-         *          new_p_priority_item = ....
-         *          ...
-         *          ui->ACTable->setitem(r,c,item)
-         *      }
-         *
-         *      if (input == "quit") {
-         *          break;
-         *      }
-     *      }
-     *  count++;
-     *  }
-     *
-     */
 }

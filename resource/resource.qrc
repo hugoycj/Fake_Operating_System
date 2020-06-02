@@ -4,6 +4,12 @@
         <file>icon/TextBook.ico</file>
         <file>icon/FileEplorer.ico</file>
         <file>icon/MemoryDisplayer.ico</file>
+        <file>icon/ac.ico</file>
+        <file>icon/md.ico</file>
+        <file>icon/test.ico</file>
+        <file>icon/ca.ico</file>
+        <file>icon/dir.ico</file>
+        <file>icon/file.ico</file>
     </qresource>
     <qresource prefix="/">
         <file>tool/undo.ico</file>

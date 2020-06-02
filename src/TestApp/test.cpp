@@ -16,10 +16,17 @@ void test(int mode)
     srand( (unsigned)time( NULL ) );
     size = rand()%9 + 1;
     cout << "Generate a matrix of size: " << size << endl;
+
+    vector<string> type_set = {"add", "sub", "div", "mult"};
+
     /* Mode 1: Simple Calculation */
     if (mode == 1)
     {
-        type ="mult";
+        // select the calculation type
+        int num = rand() % (3-0+1);
+        type = type_set[num];
+        cout<<"type: "<<type<<endl;
+
         tempA = single_vector_generator(1);
         tempB = single_vector_generator(1);
         size = 1;
@@ -27,6 +34,7 @@ void test(int mode)
         PCB pcb2(cur_id, type, size, &p0);
         global_pl.push(pcb2);
     }
+
     /* Mode 2: Matrix multiplication */
     else if (mode == 2)
     {
@@ -41,20 +49,7 @@ void test(int mode)
         global_pl.push(pcb1);
 
     }
-    /* Mode 3: Matrix invert */
-//    else if (mode == 3)
-//    {
-//        type = "mtx_inv";
-//        vector<vector<double>> A, result;
-//        A = { {5, -2, 2, 7},
-//             {1, 0, 0, 3},
-//             {-3, 1, 5, 0},
-//             {3, -1, -9, 4}};
-//        size = A.size()^2;
-//        static Process<vector<vector<double>>, int, vector<vector<double>>>  P2(A, 0, "mtx_inv");
-//        PCB pcb2(cur_id, type, size);
-//        pl->push(pcb2);
-//    }
+
     global_pl.display();
 }
 
@@ -74,7 +69,8 @@ vector<vector<double>> matrix_input(int row, int col)
     cout << "Please input a " << row << "*" << col << " matrix:" << endl;
     for (int i = 0; i < row; i++)
     {
-        v.clear();//子数组返回时要清除
+        // sub vector should be clear when return
+        v.clear();
         for (int j = 0; j < col; j++)
         {
             cin >> temp;
@@ -84,8 +80,9 @@ vector<vector<double>> matrix_input(int row, int col)
         matrix.push_back(v);
     }
 
+    // print out the input matrix
     cout << "The Matrix is:" << endl;
-    for (int i = 0; i < row; i++)//打印输入的二维数组
+    for (int i = 0; i < row; i++)
     {
         for (int j = 0; j < col; j++)
         {
@@ -112,7 +109,6 @@ vector<double> get_one_col(vector<vector<double>> matrix, int col)
         result.push_back(temp);
     }
 
-    assert(result.size() == r);
     return result;
 }
 

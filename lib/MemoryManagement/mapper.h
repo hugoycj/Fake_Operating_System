@@ -1,3 +1,5 @@
+#ifndef MAPPER_H
+#define MAPPER_H
 // impl of paging mapper API
 #include <string>
 #include <iostream>
@@ -5,6 +7,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <vector>
+#include "mappingdisplayer.h"
 
 using namespace std;
 
@@ -141,4 +144,8 @@ public:
 
     // generate random virtual address string, following specific rule
     string generate_VA();
+
+    friend void mappingdisplayer::onTimeOut();
 };
+
+#endif

@@ -41,189 +41,207 @@
      <height>600</height>
     </size>
    </property>
-   <widget class="QPushButton" name="TextbookButton">
+   <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>910</x>
-      <y>20</y>
-      <width>63</width>
-      <height>63</height>
-     </rect>
-    </property>
-    <property name="mouseTracking">
-     <bool>false</bool>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="flat">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TextbookLabel">
-    <property name="geometry">
-     <rect>
-      <x>895</x>
-      <y>80</y>
-      <width>90</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextBook</string>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="FileLabel">
-    <property name="geometry">
-     <rect>
-      <x>895</x>
-      <y>180</y>
-      <width>90</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>File Explorer</string>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="FileButton">
-    <property name="geometry">
-     <rect>
-      <x>910</x>
-      <y>120</y>
-      <width>63</width>
-      <height>63</height>
-     </rect>
-    </property>
-    <property name="mouseTracking">
-     <bool>false</bool>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="flat">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="DisplayerButton">
-    <property name="geometry">
-     <rect>
-      <x>912</x>
-      <y>220</y>
-      <width>63</width>
-      <height>63</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="flat">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="DisplayerLabel">
-    <property name="geometry">
-     <rect>
-      <x>885</x>
-      <y>280</y>
+      <x>870</x>
+      <y>50</y>
       <width>121</width>
-      <height>20</height>
+      <height>351</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Mapping Displayer</string>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="3" column="0">
+      <layout class="QVBoxLayout" name="MD">
+       <item>
+        <widget class="QPushButton" name="DisplayerButton">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="DisplayerLabel">
+         <property name="text">
+          <string>Mapping Displayer</string>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <layout class="QVBoxLayout" name="TA">
+       <item>
+        <widget class="QPushButton" name="TestAppButton">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="TestAppLabel">
+         <property name="text">
+          <string>TestApp</string>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0">
+      <layout class="QVBoxLayout" name="FE">
+       <item>
+        <widget class="QPushButton" name="FileButton">
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="FileLabel">
+         <property name="text">
+          <string>File Explorer</string>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="0">
+      <layout class="QVBoxLayout" name="AC">
+       <item>
+        <widget class="QPushButton" name="ACButton">
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="ACLabel">
+         <property name="text">
+          <string>Activity Monitor</string>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
-   <widget class="QPushButton" name="TestAppButton">
-    <property name="geometry">
-     <rect>
-      <x>912</x>
-      <y>320</y>
-      <width>63</width>
-      <height>63</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="flat">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="TestAppLabel">
-    <property name="geometry">
-     <rect>
-      <x>885</x>
-      <y>380</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TestApp</string>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="ACButton">
+   <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>790</x>
-      <y>20</y>
-      <width>63</width>
-      <height>63</height>
+      <y>50</y>
+      <width>71</width>
+      <height>171</height>
      </rect>
     </property>
-    <property name="mouseTracking">
-     <bool>false</bool>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="flat">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="ACLabel">
-    <property name="geometry">
-     <rect>
-      <x>780</x>
-      <y>80</y>
-      <width>90</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>AC</string>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="TB">
+         <item>
+          <widget class="QPushButton" name="TextbookButton">
+           <property name="mouseTracking">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="TextbookLabel">
+           <property name="text">
+            <string>TextBook</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="CA">
+         <item>
+          <widget class="QPushButton" name="CalenderButton">
+           <property name="mouseTracking">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="CalenderLabel">
+           <property name="text">
+            <string>Calender</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

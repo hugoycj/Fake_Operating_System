@@ -84,6 +84,8 @@ FORMS += \
     activitymonitor.ui \
     fileexplorer.ui \
     mainwindow.ui \
+    mappingdisplayer.ui \
+    properties.ui \
     testapp.ui
 
 RESOURCES += \

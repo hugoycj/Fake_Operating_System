@@ -195,7 +195,7 @@ void FSB_allocator::display() {
             i++;
             start = start->link;
         };
-        cout<<i+1<<"-th one:"<<endl;
+//        cout<<i+1<<"-th one:"<<endl;
         cout << BLOCK_SIZES[idx] << "-bytes list has : " << i << " blocks" << endl;
     }
 };

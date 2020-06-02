@@ -9,10 +9,8 @@ Disk::Disk() {
 };
 
 Disk::~Disk() {
-    if (diskimg != NULL) {
-		this->writeDiskInfo();
-        fclose(this->diskimg);
-    };
+    this->writeDiskInfo();
+    this->diskimg.close();
 };
 
 void Disk::loadDiskInfo() {
@@ -20,7 +18,7 @@ void Disk::loadDiskInfo() {
 	this->getBlock(0, data);
 
 	// Magic Number
-	string MagNum = data.substr(0, 16);
+    string MagNum = data.substr(0, 16);
 	if (MagNum == this->magic_number) {
 		// Disk Name
 		string DiskName = strip(data.substr(16, 256));
@@ -53,8 +51,8 @@ void Disk::loadDiskInfo() {
 		int INodeLoc = stoi(strip(data.substr(356, 4)));
 		this->inode_location = INodeLoc;
 	}
-	else {
-		cout << "disk has been broken" << endl;
+    else {
+        cout << "disk has been broken" << endl;
 	};
 };
 
@@ -92,17 +90,17 @@ void Disk::writeDiskInfo() {
 
 bool Disk::open(string filepath, string drive_letter) {
     if (file_exist(filepath)) {
-        this->diskimg = fopen(filepath.c_str(), "rb+");
-		this->loadDiskInfo();
+        this->diskimg.open(filepath, ios::in|ios::out);
+        this->loadDiskInfo();
 		return true;
 	}
 	else {
 		// create a new disk
-		this->diskimg = fopen(filepath.c_str(), "wb+");
+        this->diskimg.open(filepath, ios::in|ios::out|ios::trunc);
 		// TODO: get user input for how many blocks to be created
 		for (int i = 0; i < 169918464/* Maximum Size */; i++) {
 			// put enough "\0" into the disk
-			fputc(32, this->diskimg); // put empty space in
+            this->diskimg.write(" ", 1);
 		};
 
 		this->disk_name = "New Disk";
@@ -113,8 +111,7 @@ bool Disk::open(string filepath, string drive_letter) {
 		this->block_bitmap_location = 2;
 		this->inode_location = 12;
 
-		this->writeDiskInfo();
-		cout << "write disk info success" << endl;
+        this->writeDiskInfo();
 
 		// initiallize bitmaps
 		string emptybitmap = string(4096, '0');
@@ -133,7 +130,7 @@ bool Disk::open(string filepath, string drive_letter) {
 
 		// write root directory INode
 		INode root;
-		root.setter(2, 0, 0, 1, 0, 0, 0, 0, -1, "/");
+        root.setter(1, 0, 0, 1, 0, 0, 0, 0, -1, "/");
 		root.set_reference(1, 524);
 		root.set_last_node(0);
 		string data;
@@ -156,22 +153,78 @@ bool Disk::open(string filepath, string drive_letter) {
 };
 
 bool Disk::close() {
-    if (diskimg != NULL) {
-		this->writeDiskInfo();
-        fclose(this->diskimg);
-		return true;
-    };
-	return false;
+    this->writeDiskInfo();
+    this->diskimg.close();
+    return true;
 };
+
+bool Disk::clear() {
+    this->writeDiskInfo();
+    this->diskimg.close();
+    this->diskimg.clear();
+    return true;
+};
+
+bool Disk::format() {
+    for (int i = 0; i < 169918464/* Maximum Size */; i++) {
+        // put enough "\0" into the disk
+        this->diskimg.write(" ", 1);
+    };
+
+    this->disk_name = "New Disk";
+    this->Blocks = 41484;
+    this->used_space = 0;
+    this->total_space = 169918464;
+    this->inode_bitmap_location = 1;
+    this->block_bitmap_location = 2;
+    this->inode_location = 12;
+
+    this->writeDiskInfo();
+
+    // initiallize bitmaps
+    string emptybitmap = string(4096, '0');
+
+    this->putBlock(1, emptybitmap);
+    this->putBlock(2, emptybitmap);
+    this->putBlock(3, emptybitmap);
+    this->putBlock(4, emptybitmap);
+    this->putBlock(5, emptybitmap);
+    this->putBlock(6, emptybitmap);
+    this->putBlock(7, emptybitmap);
+    this->putBlock(8, emptybitmap);
+    this->putBlock(9, emptybitmap);
+    this->putBlock(10, emptybitmap);
+    this->putBlock(11, emptybitmap);
+
+    // write root directory INode
+    INode root;
+    root.setter(1, 0, 0, 1, 0, 0, 0, 0, -1, "/");
+    root.set_reference(1, 524);
+    root.set_last_node(0);
+    string data;
+    data = root.dumpINode();
+    // cout << data << endl;
+    this->putINode(0, data);
+
+    // write root directory block
+    string rootdata = add_placeholder(0, 8) + add_placeholder("..", 24) + add_placeholder(0, 8) + add_placeholder(".", 24);
+    this->putBlock(524, rootdata);
+
+    // update bitmap
+    this->changeBitmap(1, 0);
+    this->changeBitmap(2, 0);
+
+    cout << "Disk formated successfully" << endl;
+    return true;
+}
 
 bool Disk::getBlock(int blocknum, string &data) {
     if (blocknum <= (int)Blocks) {
-        fseek(diskimg, blocknum*BlockSize, SEEK_SET);
+        this->diskimg.seekg(blocknum*4096, ios::beg);
         char cdata[4096];
-        fgets(cdata, BlockSize, diskimg);
+        this->diskimg.read(cdata, 4096);
 		string temp = chartostring(cdata, 4096);
-		data = temp;
-        // cout << data << endl; // for test
+        data = temp;
 		return true;
     };
 	return false;
@@ -181,18 +234,12 @@ bool Disk::putBlock(int blocknum, string &data) {
 	// TODO: check data size smaller than blocksize, if larger, return to the above level
     if (blocknum <= (int)Blocks) {
         if (data.size() != 0) {
-            fseek(diskimg, blocknum*BlockSize, SEEK_SET);
+            this->diskimg.seekp(blocknum*4096, ios::beg);
 			//int len = strlen(data.c_str())+1;
 			int len = strlen(data.c_str());
-			if (fwrite(data.c_str(), 1, len, diskimg) == len) {
-				// cout << "write operation success" << endl;
-				return true;
-			}
-			else {
-				// cout << "write operation failed" << endl;
-				return false;
-			};
+            this->diskimg.write(data.c_str(), len);
         };
+        return true;
     };
 	return false;
 };
@@ -207,8 +254,6 @@ bool Disk::getINode(int nodenum, string &data) {
 	return true;
 };
 
-
-
 bool Disk::putINode(int nodenum, string &data) {
 	int blocknum = nodenum / 8 + 12;
 	int offset = nodenum % 8;
@@ -220,7 +265,6 @@ bool Disk::putINode(int nodenum, string &data) {
 	this->putBlock(blocknum, blockdata);
 	return true;
 };
-
 
 bool Disk::getBitmap(int nodenum, int position) {
 	string data;
@@ -312,3 +356,128 @@ string dumpDirEntry(int INodenum, string name) {
 	return add_placeholder(INodenum, 8) + add_placeholder(name, 24);
 };
 
+// tool functions
+string strip(string str) {
+	string new_str = str;
+
+	// get rid of the white spaces
+	new_str.erase(0, new_str.find_first_not_of(" "));
+	new_str.erase(new_str.find_last_not_of(" ") + 1);
+
+	// get rid of the tabs
+	new_str.erase(0, new_str.find_first_not_of("\t"));
+	new_str.erase(new_str.find_last_not_of("\t") + 1);
+
+	return new_str;
+};
+
+int getindex(string element, string array[], int length) {
+	int index = -1;
+	for (int i = 0; i < length; i++) {
+		if (element == array[i]) {
+			index = i;
+			break;
+		};
+	};
+	return index;
+};
+
+bool file_exist(string filename) {
+	if (FILE *file = fopen(filename.c_str(), "r")) {
+		fclose(file);
+		return true;
+	}
+	else {
+		return false;
+	}
+};
+
+vector<string> process_path(string raw) {
+	// TODO: not comlete
+	vector<string> path;
+	return path;
+};
+
+string slash_trans(string raw) {
+	// TODO: not complete
+	return raw;
+};
+
+string add_placeholder(string raw, int length) {
+	for (size_t i = raw.length(); i < length; i++) {
+		raw = raw + ' ';
+	};
+	return raw;
+};
+
+string add_placeholder(int raw, int length) {
+	string data = to_string(raw);
+	return add_placeholder(data, length);
+};
+
+string chartostring(char* raw, int size) {
+	string str;
+	for (int i = 0; i < size; i++) {
+		str = str + raw[i];
+	};
+	return str;
+};
+
+bool all_placeholder(string raw) {
+	// not perfect
+	if (raw.find_first_not_of(" ") != std::string::npos)
+	{
+		// TODO: verify whether the following is useful or not
+		bool flag = true;
+		for (int i = 0; i < raw.length(); i++) {
+			if (raw[i] == '\0') {
+				flag = false;
+			};
+			char one = raw[i];
+		};
+		if (!flag) {
+			return true;
+		}
+		else {
+			return false;
+		};
+		return false;
+	}
+	else {
+		return true;
+	};
+};
+
+int get_cur_time() {
+	time_t t = std::time(0);
+	return t;
+};
+
+vector<string> extract_part(string line, string seperator)
+{
+	size_t pos1, pos2;
+	vector<string> parameters;
+	pos2 = line.find(seperator);
+	pos1 = 0;
+	while (pos2 != string::npos)
+	{
+		parameters.push_back(line.substr(pos1, pos2 - pos1));
+
+		pos1 = pos2 + seperator.length();
+		pos2 = line.find(seperator, pos1);
+	}
+	if (pos1 != line.length()) {
+		parameters.push_back(line.substr(pos1));
+	}
+	return parameters;
+};
+
+vector<int> locate_parameter(vector<string> parameters) {
+	vector<int> location;
+	for (int i = 0; i < parameters.size(); i++) {
+		if (&parameters[i][0] == "-") {
+			location.push_back(i);
+		};
+	};
+	return location;
+};

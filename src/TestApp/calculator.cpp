@@ -1,5 +1,5 @@
 /*
- * From line xx to line xx
+ * From line 101 to line 214
  * Reference:
  * Ashutosh Kumar, (2017) Adjoint and Inverse of a Matrix [Source code]. https://www.geeksforgeeks.org/adjoint-inverse-matrix/
  */
@@ -26,27 +26,11 @@ double * calculate(vector<double> data_vec_1, vector<double> data_vec_2, string 
     FSB_allocator allocator = * allocator_ptr;
 
     if (type == "mtx_mult") {
-//        size_t vec_size = sizeof(vector<double>) + 8*(data_vec_1.size());
-
-        // alloc memory to store data and result
-//        vector<double> * data1_ptr = (vector<double> *) allocator.alloc(vec_size);
-//        vector<double> * data2_ptr = (vector<double> *) allocator.alloc(vec_size);
+        // alloc memory to store data
         double * res_ptr = (double *) allocator.alloc(sizeof(double));
 
-//        vector<double> * data1_ptr = (vector<double> *) malloc(vec_size);
-//        vector<double> * data2_ptr = (vector<double> *) malloc(vec_size);
-//        double * res_ptr = (double *) malloc(sizeof(double));
-
-//        // put data into allocated memory
-//        *data1_ptr = data_vec_1;
-//        *data2_ptr = data_vec_2;
-
-//        // calculate the result and store the value
-//        *res_ptr = dot_mult(*data1_ptr, *data2_ptr);
+        // calculate the result and store the value
         *res_ptr = dot_mult(data_vec_1, data_vec_2);
-
-//        allocator.dealloc(data1_ptr, vec_size);
-//        allocator.dealloc(data2_ptr, vec_size);
 
         cout << "result: " << *res_ptr << endl;
         cout << "" << endl;

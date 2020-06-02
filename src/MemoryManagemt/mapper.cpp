@@ -2,6 +2,7 @@
 * Reference:
 * Perez, R., Brunette, A. & Zhang, A., (2019) Virtual Memory Manager [Source code]. https://github.com/abrunette/Virtual_Memory_Manager
 */
+
 #include <string>
 #include <iostream>
 #include <map>
@@ -76,6 +77,42 @@ using namespace std;
  *
  * Since there PTSize is 64, 64 TLB are required.
  */
+
+/*                                      Translation Process
+ *
+ *              Virtual Address: 32-bit
+ *
+ *      0000 0000 01 00 0000 0010 0000 0000 1101
+ *      ------------ ------------ --------------
+ *      1st page no. 2nd page no.   page offset
+ *          ||           ||             ||
+ *          ||           ||              --------------------------------------------------------------
+ *   --------             -----------------------------------                                         ||
+ *  ||                                                      ||                                        ||
+ *  ||       1st-lv-pt        =====> (index: i) 2nd-lv-pt   ||                                        ||
+ *  \/     |-----------|     ||         |-----------|       \/                                        ||
+ * 0x0000  | page2Idx  | =====          | frame no  |---   0x0000                                     ||
+ *         |-----------|                |-----------|  ||                                             ||
+ * 0x0001  |           |                |           |   -------------------------                     ||
+ *         |-----------|                |-----------|                           ||                    ||
+ * 0x0002  |           |                |           |      0x0002               ||                    ||
+ *         |-----------|                |-----------|                           \/                    \/
+ * 0x0003  |           |                |           |      0x0003       0000 0000 01 00 0000 0010 0000 0000 1101
+ *         |-----------|                |-----------|                   ------------ ------------ --------------
+ * 0x0004  |           |                |           |      0x0004       1st page no. 2nd page no.   page offset
+ *         |-----------|                |-----------|
+ *         .           .                .           .                           Physical Address: 28-bit
+ *         .           .                .           .
+ *         .           .                .           .
+ *         |           |                |           |
+ *         |-----------|                |-----------|
+ * 0x0062  |           |                |           |      0x0062
+ *         |-----------|                |-----------|
+ * 0x0063  |           |                |           |      0x0063
+ *         |-----------|                |-----------|
+ *
+ */
+
 
 void VM::zero_extend(string &target, unsigned int len) {
     while (target.length() < len) {
@@ -190,7 +227,6 @@ void VM::updateTLB(int index, int page, int frame) {
 
 // create a new 2nd level PT and initialize it
 void VM::random_init(int id) {
-    cout << "start random init" << endl;
     vector<int> pt;
 
     // initialize pt
@@ -205,7 +241,6 @@ void VM::random_init(int id) {
 
     // put pt into LV2_PT_SET according to id
     LV2_PT_SET[id] = pt;
-    cout<<"init ok"<<endl;
 };
 
 
