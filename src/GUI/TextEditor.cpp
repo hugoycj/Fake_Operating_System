@@ -1,9 +1,10 @@
 #include "TextEditor.h"
 #include "ui_mainwindow.h"
 #include <QIcon>
+#include <iostream>
 
 TextEditor::TextEditor(QWidget *parent)
-    : QMainWindow(parent), statusLabel(this)
+    : QMainWindow(parent)
 {
     this->construct();
 }
@@ -11,12 +12,50 @@ TextEditor::TextEditor(QWidget *parent)
 bool TextEditor::construct()
 {
     bool ret = true;
-//    ret = ret && initMenuBar();
+
+    ret = ret && initMenuBar();
     ret = ret && initToolBar();
-//    ret = ret && initStatusBar();
+    ret = ret && initStatusBar();
     ret = ret && initinitMainEditor();
+
     return ret;
 }
+
+void TextEditor::save_action_slot() {
+    std::cout << "save action" << std::endl;
+}
+
+void TextEditor::exit_action_slot() {
+    std::cout << "exit action" << std::endl;
+}
+
+void TextEditor::undo_action_slot() {
+    std::cout << "undo action" << std::endl;
+};
+
+void TextEditor::redo_action_slot() {
+    std::cout << "redo action" << std::endl;
+};
+
+void TextEditor::cut_action_slot() {
+    std::cout << "cut action" << std::endl;
+};
+
+void TextEditor::copy_action_slot() {
+    std::cout << "copy action" << std::endl;
+};
+
+void TextEditor::paste_action_slot() {
+    std::cout << "paste action" << std::endl;
+};
+
+void TextEditor::delete_action_slot() {
+    std::cout << "delete action" << std::endl;
+};
+
+void TextEditor::select_all_action_slot() {
+    std::cout << "select all action" << std::endl;
+};
 
 TextEditor* TextEditor::NewInstance()
 {
@@ -30,23 +69,20 @@ TextEditor* TextEditor::NewInstance()
 
     return ret;
 }
-bool TextEditor::initMenuBar()//菜单栏
+
+bool TextEditor::initMenuBar()
 {
     bool ret = true;
 
-    QMenuBar* mb = menuBar();//一定要注意是menuBar()，这是普通成员函数，不是构造函数
+    QMenuBar* mb = menuBar();
 
-    ret = ret && initFileMenu(mb);//传一个参数是为了在initFileMenu()函数将menu加入菜单栏
+    ret = ret && initFileMenu(mb);
     ret = ret && initEditMenu(mb);
-    ret = ret && initFormatMenu(mb);
-    ret = ret && initViewMenu(mb);
-    ret = ret && initHelpMenu(mb);
-
     return ret;
 
 }
 
-bool TextEditor::initToolBar()//工具栏
+bool TextEditor::initToolBar()
 {
     bool ret = true;
 
@@ -55,13 +91,12 @@ bool TextEditor::initToolBar()//工具栏
     tb->setFloatable(false);
     tb->setIconSize(QSize(16,16));
 
-
     ret = ret && initFileToolItem(tb);
 
     return ret;
 }
 
-bool TextEditor::initStatusBar()//状态栏
+bool TextEditor::initStatusBar()
 {
     bool ret = true;
 
@@ -71,16 +106,10 @@ bool TextEditor::initStatusBar()//状态栏
 
     if(label != NULL)
     {
-        statusLabel.setMinimumWidth(200);
-        statusLabel.setAlignment(Qt::AlignHCenter);
-        statusLabel.setText("Ln:1    Col:1");
-
-
         label->setMinimumWidth(200);
         label->setAlignment(Qt::AlignHCenter);
 
-        sb->addPermanentWidget(new QLabel());//单纯加入分隔符
-        sb->addPermanentWidget(&statusLabel);
+        sb->addPermanentWidget(new QLabel());
         sb->addPermanentWidget(label);
     }
     else
@@ -89,7 +118,8 @@ bool TextEditor::initStatusBar()//状态栏
     }
     return ret;
 }
-bool TextEditor::initinitMainEditor()//编辑窗口
+
+bool TextEditor::initinitMainEditor()
 {
     bool ret = true;
 
@@ -99,58 +129,22 @@ bool TextEditor::initinitMainEditor()//编辑窗口
     return ret;
 }
 
-/************************************************文件菜单********************************************************/
 bool TextEditor::initFileMenu(QMenuBar* mb)
 {
     bool ret = true;
 
-    QMenu* menu = new QMenu("File(&F)");//创建文件菜单，（&F）是为了可以Alt+F打开
+    QMenu* menu = new QMenu("File(&F)");
     ret = (menu != NULL);
     if(ret)
     {
         QAction* action = NULL;
 
-        //New
-        ret = ret &&  makeAction(action, "New(&N)",Qt::CTRL + Qt::Key_N);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
-        //Open
-        ret = ret &&  makeAction(action, "Open(&O)...",Qt::CTRL + Qt::Key_O);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
         //Save
-        ret = ret &&  makeAction(action, "Save(&S)",Qt::CTRL + Qt::Key_S);
+        ret = ret && makeAction(action, "Save(&S)",Qt::CTRL + Qt::Key_S);
         if(ret)
         {
            menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
-        //Save As
-        ret = ret &&  makeAction(action, "Save As(&A)...",0);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
-        //print
-        ret = ret &&  makeAction(action, "Print(&P)...",Qt::CTRL + Qt::Key_P);
-        if(ret)
-        {
-           menu->addAction(action);
+           connect(action, SIGNAL(triggered()), this, SLOT(save_action_slot()));
         }
 
         menu->addSeparator();
@@ -159,13 +153,14 @@ bool TextEditor::initFileMenu(QMenuBar* mb)
         ret = ret &&  makeAction(action, "Exit(&X)",0);
         if(ret)
         {
-           menu->addAction(action);//将菜单项加入到菜单
+           menu->addAction(action);
+           connect(action, SIGNAL(triggered()), this, SLOT(exit_action_slot()));
         }
 
     }
     if(ret)
     {
-        mb->addMenu(menu);//将菜单加入到菜单栏
+        mb->addMenu(menu);
     }
     else
     {
@@ -174,7 +169,6 @@ bool TextEditor::initFileMenu(QMenuBar* mb)
     return ret;
 }
 
-/************************************************编辑菜单********************************************************/
 bool TextEditor::initEditMenu(QMenuBar* mb)
 {
     bool ret = true;
@@ -190,6 +184,7 @@ bool TextEditor::initEditMenu(QMenuBar* mb)
         if(ret)
         {
            menu->addAction(action);
+           connect(action, SIGNAL(triggered()), this, SLOT(undo_action_slot()));
         }
 
         menu->addSeparator();
@@ -199,6 +194,7 @@ bool TextEditor::initEditMenu(QMenuBar* mb)
         if(ret)
         {
            menu->addAction(action);
+           connect(action, SIGNAL(triggered()), this, SLOT(redo_action_slot()));
         }
 
         menu->addSeparator();
@@ -208,6 +204,7 @@ bool TextEditor::initEditMenu(QMenuBar* mb)
         if(ret)
         {
            menu->addAction(action);
+           connect(action, SIGNAL(triggered()), this, SLOT(cut_action_slot()));
         }
 
         menu->addSeparator();
@@ -217,15 +214,17 @@ bool TextEditor::initEditMenu(QMenuBar* mb)
         if(ret)
         {
            menu->addAction(action);
+           connect(action, SIGNAL(triggered()), this, SLOT(copy_action_slot()));
         }
 
         menu->addSeparator();
 
-        //Pase
-        ret = ret &&  makeAction(action, "Pase(&P)...",Qt::CTRL + Qt::Key_V);
+        //Paste
+        ret = ret &&  makeAction(action, "Paste(&P)...",Qt::CTRL + Qt::Key_V);
         if(ret)
         {
            menu->addAction(action);
+           connect(action, SIGNAL(triggered()), this, SLOT(paste_action_slot()));
         }
 
         menu->addSeparator();
@@ -235,33 +234,7 @@ bool TextEditor::initEditMenu(QMenuBar* mb)
         if(ret)
         {
            menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
-        //Find
-        ret = ret &&  makeAction(action, "Find(&F)...",Qt::CTRL + Qt::Key_F);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
-        //Replace
-        ret = ret &&  makeAction(action, "Replace(&R)...",Qt::CTRL + Qt::Key_H);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
-        //Goto
-        ret = ret &&  makeAction(action, "Goto(&G)",Qt::CTRL + Qt::Key_G);
-        if(ret)
-        {
-           menu->addAction(action);
+           connect(action, SIGNAL(triggered()), this, SLOT(delete_action_slot()));
         }
 
         menu->addSeparator();
@@ -271,123 +244,7 @@ bool TextEditor::initEditMenu(QMenuBar* mb)
         if(ret)
         {
            menu->addAction(action);
-        }
-
-    }
-    if(ret)
-    {
-        mb->addMenu(menu);
-    }
-    else
-    {
-        delete mb;
-    }
-    return ret;
-}
-
-/************************************************格式菜单********************************************************/
-bool TextEditor::initFormatMenu(QMenuBar* mb)
-{
-    bool ret = true;
-
-    QMenu* menu = new QMenu("Format(&O)");
-    ret = (menu != NULL);
-    if(ret)
-    {
-        QAction* action = NULL;
-
-        //Auto Wrap
-        ret = ret &&  makeAction(action, "Auto Wrap(&W)",0);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
-        //Font
-        ret = ret &&  makeAction(action, "Font(&F)...",0);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-    }
-    if(ret)
-    {
-        mb->addMenu(menu);
-    }
-    else
-    {
-        delete mb;
-    }
-    return ret;
-}
-
-/************************************************视图菜单********************************************************/
-bool TextEditor::initViewMenu(QMenuBar* mb)
-{
-    bool ret = true;
-
-    QMenu* menu = new QMenu("View(&V)");
-    ret = (menu != NULL);
-    if(ret)
-    {
-        QAction* action = NULL;
-
-        //Tool Bar
-        ret = ret &&  makeAction(action, "Tool Bar(&T)",0);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
-        //Status Bar
-        ret = ret &&  makeAction(action, "Status Bar(&S)",0);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-    }
-    if(ret)
-    {
-        mb->addMenu(menu);
-    }
-    else
-    {
-        delete mb;
-    }
-    return ret;
-}
-
-/************************************************帮助菜单********************************************************/
-bool TextEditor::initHelpMenu(QMenuBar* mb)
-{
-    bool ret = true;
-
-    QMenu* menu = new QMenu("Help(&H)");
-    ret = (menu != NULL);
-    if(ret)
-    {
-        QAction* action = NULL;
-
-        //User Manual
-        ret = ret &&  makeAction(action, "User Manual",0);
-        if(ret)
-        {
-           menu->addAction(action);
-        }
-
-        menu->addSeparator();
-
-        //About NotePad
-        ret = ret &&  makeAction(action, "About NotePad...",0);
-        if(ret)
-        {
-           menu->addAction(action);
+           connect(action, SIGNAL(triggered()), this, SLOT(select_all_action_slot()));
         }
 
     }
@@ -407,65 +264,28 @@ bool TextEditor::initFileToolItem(QToolBar* tb)
     bool ret = true;
     QAction* action = NULL;
 
-//    QPixmap newpix("new.png");
-//    QPixmap openpix("open.png");
-//    QPixmap quitpix("quit.png");
-//    tb->addAction(QIcon(newpix), "New File");
-//    tb->addSeparator();
-//    tb->addAction(QIcon(openpix), "Open File");
-//    tb->addSeparator();
-//    tb->addAction(QIcon(quitpix),"Quit Application");
-
-    ret = ret && makeAction(action, "New", ":/tool/new.ico");
-    if(ret)
-    {
-        tb->addAction(action);
-    }
-
-    ret = ret && makeAction(action, "Open", ":/tool/open.ico");
-    if(ret)
-    {
-        tb->addAction(action);
-    }
-
     ret = ret && makeAction(action, "Save", ":/tool/save.ico");
     if(ret)
     {
         tb->addAction(action);
     }
 
-//    ret = ret && makeAction(action, "Save As", ":/Res/pic/saveas.png");
-//    if(ret)
-//    {
-//        tb->addAction(action);
-//    }
-//    ret = ret && makeAction(action, "Print", ":/tool/print.ico");
-//    if(ret)
-//    {
-//        tb->addAction(action);
-//    }
     ret = ret && makeAction(action, "Undo", ":/tool/undo.ico");
     if(ret)
     {
         tb->addAction(action);
     }
-//    ret = ret && makeAction(action, "Redo", ":/tool/redo.ico");
-//    if(ret)
-//    {
-//        tb->addAction(action);
-//    }
-
     return ret;
 
 }
 
-bool TextEditor::makeAction(QAction*& action, QString text, int key)//菜单项
+bool TextEditor::makeAction(QAction*& action, QString text, int key)
 {
     bool ret = true;
     action = new QAction(text, NULL);
     if(action != NULL)
     {
-        action->setShortcut(QKeySequence(key));//创建快捷键
+        action->setShortcut(QKeySequence(key));
     }
     else
     {
@@ -474,6 +294,7 @@ bool TextEditor::makeAction(QAction*& action, QString text, int key)//菜单项
 
     return ret;
 }
+
 bool TextEditor::makeAction(QAction*& action, QString tip, QString icon)
 {
     bool ret = true;
@@ -489,8 +310,21 @@ bool TextEditor::makeAction(QAction*& action, QString tip, QString icon)
     }
     return ret;
 }
+
 TextEditor::~TextEditor()
 {
 
-}
+};
 
+void TextEditor::receiveOriginalText(std::string text, std::string filename) {
+    this->mainEdit.setPlainText(QString::fromStdString(text));
+    this->filename = filename;
+};
+
+void TextEditor::closeEvent(QCloseEvent* event) {
+    QString text = this->mainEdit.toPlainText();
+    QVector<QString> transfer;
+    transfer.push_back(text);
+    transfer.push_back(QString::fromStdString(this->filename));
+    emit this->sendText(transfer);
+};

@@ -23,8 +23,10 @@ private:
     Ui::MainWindow *ui;
     void clickTextbook();
     void clickFile();
-    void clickMemory();
+    void clickMD();
     void clickTestApp();
     void clickAC();
+    void clickCalender();
+
 };
 #endif // MAINWINDOW_H

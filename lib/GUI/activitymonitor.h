@@ -2,7 +2,6 @@
 #define ACTIVITYMONITOR_H
 #include <QMainWindow>
 #include <QTimer>
-#include <unistd.h>
 
 namespace Ui {
 class activitymonitor;
